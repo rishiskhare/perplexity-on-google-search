@@ -295,7 +295,7 @@ function addCustomFont() {
   fontFaceStyle.textContent = `
     @font-face {
       font-family: 'FKGrotesk-Regular';
-      src: url('${chrome.runtime.getURL('FKGrotesk-Regular.ttf')}') format('truetype');
+      src: url('${chrome.runtime.getURL('assets/FKGrotesk-Regular.ttf')}') format('truetype');
       font-style: normal;
     }
   `;
@@ -304,7 +304,7 @@ function addCustomFont() {
 
 function createLogoImage() {
   const logoImg = document.createElement('img');
-  logoImg.src = chrome.runtime.getURL('perplexity-logo.webp');
+  logoImg.src = chrome.runtime.getURL('assets/perplexity-logo.webp');
   logoImg.alt = "Perplexity";
 
   Object.assign(logoImg.style, {

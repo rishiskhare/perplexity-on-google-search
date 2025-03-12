@@ -11,7 +11,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["perplexity-logo.webp", "FKGrotesk-Regular.ttf"],
+      "resources": ["assets/perplexity-logo.webp", "assets/FKGrotesk-Regular.ttf"],
       "matches": ["<all_urls>"]
     }
   ]
