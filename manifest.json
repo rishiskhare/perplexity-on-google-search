@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Perplexity for Google Search: Start a Perplexity thread every time you search on Google!",
+  "name": "Perplexity for Google Search",
   "version": "1.0",
-  "description": "Replace the AI overview from Google search with Perplexity!",
+  "description": "Replace Google's AI overviews and start a Perplexity thread every time you search on Google!",
   "content_scripts": [
     {
       "matches": ["https://www.google.com/search*"],
