@@ -13,11 +13,30 @@ const COLORS = {
   border: '#e0e0e0'
 };
 
-function createPerplexitySidebar() {
+const DEFAULT_SETTINGS = {
+  autoExpandSidebar: false,
+  sidebarWidth: 400
+};
+
+function initializeWithUserSettings() {
+  chrome.storage.sync.get({
+    settings: DEFAULT_SETTINGS
+  }, function(data) {
+    createPerplexitySidebar(data.settings);
+
+    if (!data.settings.autoExpandSidebar) {
+      addPerplexitySideButton();
+    } else {
+      addPerplexitySideButton(true);
+    }
+  });
+}
+
+function createPerplexitySidebar(settings) {
   const query = new URLSearchParams(window.location.search).get('q') || '';
   const perplexityUrl = `https://www.perplexity.ai/search?q=${encodeURIComponent(query)}`;
 
-  const sidebar = createSidebarElement();
+  const sidebar = createSidebarElement(settings);
   const headerSection = createHeaderSection();
   const closeButton = createCloseButton();
   const contentContainer = createContentContainer();
@@ -32,28 +51,14 @@ function createPerplexitySidebar() {
   document.body.appendChild(sidebar);
 
   setupResizeFunctionality(sidebar, resizeHandle, iframe);
-}
 
-function createSidebarElement() {
-  const sidebar = document.createElement('div');
-  sidebar.id = "perplexity-sidebar";
-
-  Object.assign(sidebar.style, {
-    position: "fixed",
-    top: "0",
-    right: "0",
-    width: SIDEBAR_CONFIG.DEFAULT_WIDTH,
-    height: "100%",
-    backgroundColor: "#fff",
-    boxShadow: "-2px 0 5px rgba(0,0,0,0.3)",
-    zIndex: SIDEBAR_CONFIG.Z_INDEX,
-    display: "flex",
-    flexDirection: "column",
-    transform: "translateX(100%)",
-    transition: "transform 0.3s ease"
-  });
-
-  return sidebar;
+  if (settings.autoExpandSidebar) {
+    setTimeout(() => {
+      sidebar.style.transform = "translateX(0)";
+      const sideButton = document.getElementById("perplexity-side-button");
+      if (sideButton) sideButton.style.display = "none";
+    }, 30);
+  }
 }
 
 function createHeaderSection() {
@@ -132,6 +137,31 @@ function createHeaderSection() {
   headerSection.appendChild(titleContainer);
 
   return headerSection;
+}
+
+function createSidebarElement(settings) {
+  const sidebar = document.createElement('div');
+  sidebar.id = "perplexity-sidebar";
+
+  const width = (settings && settings.sidebarWidth) ? `${settings.sidebarWidth}px` : SIDEBAR_CONFIG.DEFAULT_WIDTH;
+
+  Object.assign(sidebar.style, {
+    position: "fixed",
+    top: "0",
+    right: "0",
+    width: width,
+    height: "100%",
+    backgroundColor: "#fff",
+    boxShadow: "-2px 0 5px rgba(0,0,0,0.2)",
+    zIndex: SIDEBAR_CONFIG.Z_INDEX,
+    display: "flex",
+    flexDirection: "column",
+    transform: "translateX(100%)",
+    transition: "transform 0.3s ease",
+    boxSizing: "border-box"
+  });
+
+  return sidebar;
 }
 
 function createCloseButton() {
@@ -276,10 +306,10 @@ function setupResizeFunctionality(sidebar, resizeHandle, iframe) {
   }
 }
 
-function addPerplexitySideButton() {
+function addPerplexitySideButton(initiallyHidden = false) {
   addCustomFont();
 
-  const button = createSideButton();
+  const button = createSideButton(initiallyHidden);
   const logoImg = createLogoImage();
   const buttonText = createButtonText();
 
@@ -317,7 +347,7 @@ function createLogoImage() {
   return logoImg;
 }
 
-function createSideButton() {
+function createSideButton(initiallyHidden = false) {
   const button = document.createElement('div');
   button.id = "perplexity-side-button";
 
@@ -331,7 +361,7 @@ function createSideButton() {
     borderRadius: "35px 0 0 35px",
     backgroundColor: COLORS.primary,
     color: "#fff",
-    display: "flex",
+    display: initiallyHidden ? "none" : "flex",
     alignItems: "center",
     justifyContent: "center",
     cursor: "pointer",
@@ -397,11 +427,15 @@ function toggleSidebar() {
     sidebar.style.transform = "translateX(100%)";
     button.style.display = "flex";
   } else {
-    sidebar.style.width = SIDEBAR_CONFIG.DEFAULT_WIDTH;
-    sidebar.style.transform = "translateX(0)";
-    button.style.display = "none";
+    chrome.storage.sync.get({
+      settings: DEFAULT_SETTINGS
+    }, function(data) {
+      const width = `${data.settings.sidebarWidth}px`;
+      sidebar.style.width = width;
+      sidebar.style.transform = "translateX(0)";
+      button.style.display = "none";
+    });
   }
 }
 
-createPerplexitySidebar();
-addPerplexitySideButton();
+initializeWithUserSettings();

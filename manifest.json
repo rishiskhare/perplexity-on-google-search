@@ -14,5 +14,17 @@
       "resources": ["assets/perplexity-logo.webp", "assets/FKGrotesk-Regular.ttf"],
       "matches": ["<all_urls>"]
     }
-  ]
+  ],
+  "permissions": [
+    "storage"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "assets/icon.webp",
+      "48": "assets/icon.webp",
+      "128": "assets/icon.webp"
+    }
+  }
+
 }
