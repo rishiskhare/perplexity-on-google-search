@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Replace Google AI Overview with Perplexity",
+  "version": "1.0",
+  "description": "Removes the AI overview from Google search pages and embeds Perplexity with the search query.",
+  "content_scripts": [
+    {
+      "matches": ["https://www.google.com/search*"],
+      "js": ["content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["perplexity-logo.webp", "FKGrotesk-Regular.ttf"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
