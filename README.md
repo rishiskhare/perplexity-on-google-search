@@ -6,7 +6,7 @@
 - <b>Seamless Integration:</b> Automatically opens a Perplexity thread alongside your Google search results.
 - <b>On-Demand Sidebar:</b> By default, access the Perplexity window via a dedicated button next to your search results.
 - <b>Customizable Behavior:</b> Easily configure the extension to have the sidebar pop up automatically if you prefer.
-- <b>Free to Use:</b> Enjoy full functionality at no cost. If you like the extension, please consider giving the repo a star! ⭐
+- <b>Free to Use:</b> Enjoy full functionality at no cost. If you like the extension, give the repo a <b>star</b>! ⭐
 
 ## How It Works
 - <b>Search as Usual:</b> Enter your query in Google’s search bar.
