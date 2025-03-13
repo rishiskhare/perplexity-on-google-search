@@ -16,10 +16,10 @@
 https://github.com/user-attachments/assets/6db20a44-bac2-4328-8ba1-c7c5eeeae726
 
 ## Installation
-<b>Download the Extension:</b> Get the latest version from the Chrome Web Store or clone the repository.
-<b>Enable Developer Mode:</b> Open Chrome and navigate to chrome://extensions/. Enable Developer mode.
-<b>Load the Extension:</b> Click "Load unpacked" and select the extension folder.
-<b>Start Searching:</b> Once installed, perform a Google search and enjoy the integrated Perplexity experience.
+1. <b>Download the Extension:</b> Get the latest version from the Chrome Web Store or clone the repository.
+2. <b>Enable Developer Mode:</b> Open Chrome and navigate to chrome://extensions/. Enable Developer mode.
+3. <b>Load the Extension:</b> Click "Load unpacked" and select the extension folder.
+4. <b>Start Searching:</b> Once installed, perform a Google search and enjoy the integrated Perplexity experience.
 
 ## Customization
 If you prefer the Perplexity sidebar to appear automatically rather than waiting for you to click the button, you can adjust the settings:
