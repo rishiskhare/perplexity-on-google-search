@@ -18,7 +18,7 @@ https://github.com/user-attachments/assets/6db20a44-bac2-4328-8ba1-c7c5eeeae726
 
 ## Customization
 If you prefer the Perplexity sidebar to appear automatically rather than waiting for you to click the button, you can adjust the settings:
-- Navigate to the extension options and toggle the default popup behavior.
+- Navigate to the extension options and toggle the "Auto-expand sidebar" option.
 - For a visual guide, refer to the screenshot below.
 <img width="402" alt="Screenshot 2025-03-12 at 4 58 57 PM" src="https://github.com/user-attachments/assets/8d5a75f2-d63a-40cc-b262-7bbefc1d514f" />
 
