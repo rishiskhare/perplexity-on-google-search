@@ -26,3 +26,7 @@ If you prefer the Perplexity sidebar to appear automatically rather than waiting
 Contributions, bug reports, and feature suggestions are welcome! If you appreciate the work and find it useful, please consider:
 - Starring the Repo: A star helps spread the word.
 - Forking and Submitting PRs: Enhance functionality or fix issues and submit your improvements.
+
+## License
+This project is licensed under [Apache License, 2.0](https://github.com/rishiskhare/perplexity-on-google-search?tab=Apache-2.0-1-ov-file#readme).<br>
+Enjoy a smarter search experience by combining the best of Google and Perplexity—all in one place!
