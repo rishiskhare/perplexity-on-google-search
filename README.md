@@ -3,7 +3,7 @@
 "Perplexity on Google Search" is a free Chrome extension that brings the power of Perplexity AI directly into your Google searches. Now you can get answers from both Google and Perplexity side-by-side with a single query—no more switching between tabs or typing the same question twice!
 
 ### **Update (April 2025): 
-Perplexity has removed iframe options to be able to embed the page on Google search, so the extension is no longer useable. I will archive this repo until a useable solution comes out. Reach me anytime at rishiskhare [at] gmail [dot] com.
+Perplexity has removed iframe options to be able to embed the page on Google search, so the extension is no longer usable. I will archive this repo until a working solution comes out. Reach me anytime at rishiskhare [at] gmail [dot] com.
 
 ## Key Features
 - <b>Seamless Integration:</b> Automatically opens a Perplexity thread alongside your Google search results.
