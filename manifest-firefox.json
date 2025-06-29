@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Perplexity for Google Search",
   "version": "1.0",
-  "description": "Forget Google's AI overviews—start a Perplexity thread every time you search on Google!",
+  "description": "Skip the clutter of Google’s AI Overviews—get instant, high-quality answers from Perplexity in a smart sidebar every time you search!",
   "content_scripts": [
     {
       "matches": [
