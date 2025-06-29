@@ -18,13 +18,18 @@ const DEFAULT_SETTINGS = {
   sidebarWidth: 400
 };
 
+const storageArea = chrome.storage.local;
+
+const getExtensionURL = (chrome.runtime && chrome.runtime.getURL) ? chrome.runtime.getURL : (p) => p;
+
 function initializeWithUserSettings() {
-  chrome.storage.sync.get({
+  storageArea.get({
     settings: DEFAULT_SETTINGS
   }, function(data) {
-    createPerplexitySidebar(data.settings);
+    const settings = (data && data.settings) ? data.settings : DEFAULT_SETTINGS;
+    createPerplexitySidebar(settings);
 
-    if (!data.settings.autoExpandSidebar) {
+    if (!settings.autoExpandSidebar) {
       addPerplexitySideButton();
     } else {
       addPerplexitySideButton(true);
@@ -325,7 +330,7 @@ function addCustomFont() {
   fontFaceStyle.textContent = `
     @font-face {
       font-family: 'FKGrotesk-Regular';
-      src: url('${chrome.runtime.getURL('assets/FKGrotesk-Regular.ttf')}') format('truetype');
+      src: url('${getExtensionURL('assets/FKGrotesk-Regular.ttf')}') format('truetype');
       font-style: normal;
     }
   `;
@@ -334,7 +339,7 @@ function addCustomFont() {
 
 function createLogoImage() {
   const logoImg = document.createElement('img');
-  logoImg.src = chrome.runtime.getURL('assets/perplexity-logo.webp');
+  logoImg.src = getExtensionURL('assets/perplexity-logo.webp');
   logoImg.alt = "Perplexity";
 
   Object.assign(logoImg.style, {
@@ -427,10 +432,11 @@ function toggleSidebar() {
     sidebar.style.transform = "translateX(100%)";
     button.style.display = "flex";
   } else {
-    chrome.storage.sync.get({
+    storageArea.get({
       settings: DEFAULT_SETTINGS
     }, function(data) {
-      const width = `${data.settings.sidebarWidth}px`;
+      const settings = (data && data.settings) ? data.settings : DEFAULT_SETTINGS;
+      const width = `${settings.sidebarWidth}px`;
       sidebar.style.width = width;
       sidebar.style.transform = "translateX(0)";
       button.style.display = "none";

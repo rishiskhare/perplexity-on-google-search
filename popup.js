@@ -9,23 +9,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const widthValue = document.getElementById('widthValue');
     const autoExpandSidebar = document.getElementById('autoExpandSidebar');
 
+    const storageArea = chrome.storage.local;
+
     if (toggle) {
         toggle.style.transition = 'none';
     }
 
-    chrome.storage.sync.get({
+    storageArea.get({
         settings: DEFAULT_SETTINGS
     }, function(data) {
-        autoExpandSidebar.checked = data.settings.autoExpandSidebar;
+        const settings = (data && data.settings) ? data.settings : DEFAULT_SETTINGS;
+        autoExpandSidebar.checked = settings.autoExpandSidebar;
 
-        if (data.settings.sidebarWidth) {
-            widthSlider.value = data.settings.sidebarWidth;
-            widthValue.textContent = data.settings.sidebarWidth;
+        if (settings.sidebarWidth) {
+            widthSlider.value = settings.sidebarWidth;
+            widthValue.textContent = settings.sidebarWidth;
         }
 
         setTimeout(() => {
             if (toggle) {
-                toggle.style.transition = '.4s'; // Restore the original transition
+                toggle.style.transition = '.4s';
             }
         }, 100);
     });
@@ -51,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function saveSettings() {
-        chrome.storage.sync.set({
+        storageArea.set({
             settings: {
                 autoExpandSidebar: autoExpandSidebar.checked,
                 sidebarWidth: parseInt(widthSlider.value)

@@ -20,20 +20,14 @@
   ],
   "permissions": [
     "storage",
-    "declarativeNetRequest"
+    "webRequest",
+    "webRequestBlocking"
   ],
   "host_permissions": [
-    "https://perplexity.ai/*",
-    "https://*.perplexity.ai/*"
+    "<all_urls>"
   ],
-  "declarative_net_request": {
-    "rule_resources": [
-      {
-        "id": "perplexity_rules",
-        "enabled": true,
-        "path": "rules.json"
-      }
-    ]
+  "background": {
+    "service_worker": "background.js"
   },
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self';"
@@ -45,5 +39,11 @@
       "48": "assets/icon.webp",
       "128": "assets/icon.webp"
     }
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "perplexity-on-google@example.com",
+      "strict_min_version": "109.0"
+    }
   }
-}
+} 
