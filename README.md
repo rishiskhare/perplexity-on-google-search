@@ -15,10 +15,16 @@
 
 https://github.com/user-attachments/assets/6db20a44-bac2-4328-8ba1-c7c5eeeae726
 
-## Installation
+## Installation (Chrome)
 1. <b>Download the Extension:</b> Get the latest version from the Chrome Web Store or clone the repository.
 2. <b>Enable Developer Mode:</b> Open Chrome and navigate to chrome://extensions/. Enable Developer mode.
 3. <b>Load the Extension:</b> Click "Load unpacked" and select the extension folder.
+4. <b>Start Searching:</b> Once installed, perform a Google search and enjoy the integrated Perplexity experience.
+
+## Installation (Firefox)
+1. <b>Download the Extension:</b> Clone the repository.
+2. <b>Enable Developer Mode:</b> Open Firefox and navigate to about:debugging#/runtime/this-firefox.
+3. <b>Load the Extension:</b> Click "Load Temporary Add-on..." and select the manifest-firefox.json file.
 4. <b>Start Searching:</b> Once installed, perform a Google search and enjoy the integrated Perplexity experience.
 
 ## Customization
