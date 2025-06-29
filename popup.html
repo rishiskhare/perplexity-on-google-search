@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,18 +11,21 @@
             src: url('assets/FKGrotesk-Regular.ttf') format('truetype');
             font-style: normal;
         }
+
         body {
             font-family: 'FKGrotesk-Regular', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             width: 300px;
             padding: 10px 15px;
             margin: 0;
         }
+
         h2 {
             color: #40a0b0;
             margin-bottom: 10px;
             font-size: 18px;
             font-family: 'FKGrotesk-Regular', sans-serif;
         }
+
         .setting-item {
             margin: 15px 0;
             display: flex;
@@ -29,21 +33,25 @@
             justify-content: space-between;
             font-family: 'FKGrotesk-Regular', sans-serif;
         }
+
         .setting-item p {
             font-size: 14px;
             margin: 0;
         }
+
         .switch {
             position: relative;
             display: inline-block;
             width: 50px;
             height: 24px;
         }
+
         .switch input {
             opacity: 0;
             width: 0;
             height: 0;
         }
+
         .toggle {
             position: absolute;
             cursor: pointer;
@@ -55,6 +63,7 @@
             transition: .4s;
             border-radius: 24px;
         }
+
         .toggle:before {
             position: absolute;
             content: "";
@@ -66,16 +75,20 @@
             transition: .4s;
             border-radius: 50%;
         }
-        input:checked + .toggle {
+
+        input:checked+.toggle {
             background-color: #40a0b0;
         }
-        input:checked + .toggle:before {
+
+        input:checked+.toggle:before {
             transform: translateX(26px);
         }
+
         .range-container {
             width: 100%;
             margin-top: 5px;
         }
+
         .range-slider {
             -webkit-appearance: none;
             width: 100%;
@@ -84,6 +97,7 @@
             background: #d3d3d3;
             outline: none;
         }
+
         .range-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
@@ -93,6 +107,7 @@
             background: #40a0b0;
             cursor: pointer;
         }
+
         .range-values {
             display: flex;
             justify-content: space-between;
@@ -100,6 +115,7 @@
             color: #666;
             margin-top: 5px;
         }
+
         .width-value {
             font-size: 13px;
             color: #40a0b0;
@@ -107,11 +123,13 @@
             text-align: center;
             margin-top: 5px;
         }
+
         .footer {
             margin-top: 20px;
             display: flex;
             justify-content: center;
         }
+
         .restore-button {
             background-color: #f1f1f1;
             border: none;
@@ -127,12 +145,14 @@
             border-radius: 4px;
             transition: all 0.3s ease;
         }
+
         .restore-button:hover {
             background-color: #e0e0e0;
             color: #40a0b0;
         }
     </style>
 </head>
+
 <body>
     <h2>Perplexity on Google Search</h2>
     <div class="setting-item">
@@ -157,4 +177,5 @@
 
     <script src="popup.js"></script>
 </body>
+
 </html>
