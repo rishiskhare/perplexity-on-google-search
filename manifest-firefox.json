@@ -1,15 +1,17 @@
 {
   "manifest_version": 3,
-  "name": "Perplexity for Google Search",
-  "version": "1.0",
-  "description": "Skip the clutter of Google’s AI Overviews—get high-quality answers from Perplexity in a small sidebar every time you search!",
+  "name": "Perplexity on Google Search and YouTube",
+  "version": "1.1",
+  "description": "Skip Google's AI Overviews—get high-quality answers from Perplexity every time you search on Google or watch a YouTube video!",
   "content_scripts": [
     {
       "matches": [
         "https://*.google.com/search*",
-        "https://google.com/search*"
+        "https://google.com/search*",
+        "https://*.youtube.com/watch*",
+        "https://youtube.com/watch*"
       ],
-      "js": ["content.js"]
+      "js": ["defaults.js", "content.js"]
     }
   ],
   "web_accessible_resources": [

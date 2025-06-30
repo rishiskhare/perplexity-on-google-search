@@ -1,18 +1,15 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const DEFAULT_SETTINGS = {
-        autoExpandSidebar: false,
-        sidebarWidth: 400
-    };
 
-    const toggle = document.querySelector('.toggle');
+    const toggles = document.querySelectorAll('.toggle');
     const widthSlider = document.getElementById('sidebarWidth');
     const widthValue = document.getElementById('widthValue');
     const autoExpandSidebar = document.getElementById('autoExpandSidebar');
+    const youtubeSummaries = document.getElementById('youtubeSummaries');
 
     const storageArea = chrome.storage.local;
 
-    if (toggle) {
-        toggle.style.transition = 'none';
+    if (toggles.length) {
+        toggles.forEach(t => t.style.transition = 'none');
     }
 
     storageArea.get({
@@ -20,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, function(data) {
         const settings = (data && data.settings) ? data.settings : DEFAULT_SETTINGS;
         autoExpandSidebar.checked = settings.autoExpandSidebar;
+        youtubeSummaries.checked = settings.youtubeVideoSummaries;
 
         if (settings.sidebarWidth) {
             widthSlider.value = settings.sidebarWidth;
@@ -27,15 +25,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         setTimeout(() => {
-            if (toggle) {
-                toggle.style.transition = '.4s';
+            if (toggles.length) {
+                toggles.forEach(t => t.style.transition = '.4s');
             }
         }, 100);
     });
 
-    autoExpandSidebar.addEventListener('change', function() {
-        saveSettings();
-    });
+    autoExpandSidebar.addEventListener('change', saveSettings);
+    youtubeSummaries.addEventListener('change', saveSettings);
 
     widthSlider.addEventListener('input', function() {
         widthValue.textContent = this.value;
@@ -47,6 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('restoreDefaults').addEventListener('click', function() {
         autoExpandSidebar.checked = DEFAULT_SETTINGS.autoExpandSidebar;
+        youtubeSummaries.checked = DEFAULT_SETTINGS.youtubeVideoSummaries;
         widthSlider.value = DEFAULT_SETTINGS.sidebarWidth;
         widthValue.textContent = DEFAULT_SETTINGS.sidebarWidth;
 
@@ -57,7 +55,8 @@ document.addEventListener('DOMContentLoaded', function() {
         storageArea.set({
             settings: {
                 autoExpandSidebar: autoExpandSidebar.checked,
-                sidebarWidth: parseInt(widthSlider.value)
+                sidebarWidth: parseInt(widthSlider.value),
+                youtubeVideoSummaries: youtubeSummaries.checked
             }
         });
     }
