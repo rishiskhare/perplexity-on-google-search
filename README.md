@@ -16,7 +16,7 @@
 https://github.com/user-attachments/assets/6db20a44-bac2-4328-8ba1-c7c5eeeae726
 
 ## Installation (Chrome)
-1. <b>Download the Extension:</b> Get the latest version from the Chrome Web Store or clone the repository.
+1. <b>Download the Extension:</b> Get the latest version from the [Chrome Web Store](https://chromewebstore.google.com/detail/perplexity-on-google-sear/mcpphmhblkibpbdalnocnnpmpfjleaha?hl=en) or clone the repository.
 2. <b>Enable Developer Mode:</b> Open Chrome and navigate to chrome://extensions/. Enable Developer mode.
 3. <b>Load the Extension:</b> Click "Load unpacked" and select the extension folder.
 4. <b>Start Searching:</b> Once installed, perform a Google search and enjoy the integrated Perplexity experience.
