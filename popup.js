@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const platformItems = document.querySelectorAll('.platform-item');
     const moreOptionsToggle = document.getElementById('moreOptionsToggle');
     const moreOptionsSection = document.getElementById('moreOptionsSection');
+    const showSidebarButtonMode = document.getElementById('showSidebarButtonMode');
 
     const storageArea = chrome.storage.local;
 
@@ -34,6 +35,10 @@ document.addEventListener('DOMContentLoaded', function() {
             widthValue.textContent = settings.sidebarWidth;
         }
 
+        if (showSidebarButtonMode) {
+            showSidebarButtonMode.value = settings.showSidebarButtonMode || DEFAULT_SETTINGS.showSidebarButtonMode || 'supported';
+        }
+
         setTimeout(() => {
             if (toggles.length) {
                 toggles.forEach(t => t.style.transition = '.4s');
@@ -42,13 +47,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     autoExpandSidebar.addEventListener('change', saveSettings);
-
-    platformItems.forEach(item => {
-        item.addEventListener('click', () => {
-            item.classList.toggle('disabled');
-            saveSettings();
-        });
-    });
 
     widthSlider.addEventListener('input', function() {
         widthValue.textContent = this.value;
@@ -72,6 +70,20 @@ document.addEventListener('DOMContentLoaded', function() {
         widthSlider.value = DEFAULT_SETTINGS.sidebarWidth;
         widthValue.textContent = DEFAULT_SETTINGS.sidebarWidth;
 
+        if (showSidebarButtonMode) {
+            showSidebarButtonMode.value = DEFAULT_SETTINGS.showSidebarButtonMode;
+        }
+
+        platformItems.forEach(item => {
+            const key = item.dataset.key;
+            const enabled = DEFAULT_SETTINGS[key];
+            if (!enabled) {
+                item.classList.add('disabled');
+            } else {
+                item.classList.remove('disabled');
+            }
+        });
+
         saveSettings();
     });
 
@@ -83,6 +95,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    showSidebarButtonMode.addEventListener('change', saveSettings);
+
+    platformItems.forEach(item => {
+        item.addEventListener('click', () => {
+            item.classList.toggle('disabled');
+            saveSettings();
+        });
+    });
+
     function saveSettings() {
         storageArea.set({
             settings: {
@@ -91,7 +112,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 sidebarWidth: parseInt(widthSlider.value),
                 youtubeVideoSummaries: !document.querySelector('[data-key="youtubeVideoSummaries"]').classList.contains('disabled'),
                 duckduckgoSearch: !document.querySelector('[data-key="duckduckgoSearch"]').classList.contains('disabled'),
-                braveSearch: !document.querySelector('[data-key="braveSearch"]').classList.contains('disabled')
+                braveSearch: !document.querySelector('[data-key="braveSearch"]').classList.contains('disabled'),
+                showSidebarButtonMode: showSidebarButtonMode.value
             }
         });
     }

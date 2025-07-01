@@ -220,6 +220,10 @@
         </label>
     </div>
 
+    <p style="font-size:12px;color:#666;margin:4px 0 14px 0;font-family:'FKGrotesk-Regular',sans-serif;">Keyboard
+        shortcut to toggle sidebar: <br><span style="color:#333">Chrome &amp; Firefox – ⌥P (Mac) / Alt+P (Win)</span>
+    </p>
+
     <h3
         style="margin:20px 0 8px 0;font-size:14px;font-weight:bold;color:#333;font-family:'FKGrotesk-Regular',sans-serif;">
         Supported platforms <span style="font-size:12px;color:#40a0b0;font-weight:normal;">(click to toggle)</span></h3>
@@ -247,6 +251,16 @@
     <div class="more-options-toggle" id="moreOptionsToggle">More options ▸</div>
 
     <div id="moreOptionsSection" style="display: none;">
+        <div class="setting-item">
+            <p>Show sidebar button</p>
+            <select id="showSidebarButtonMode"
+                style="font-family:'FKGrotesk-Regular',sans-serif;font-size:13px;padding:4px 6px;border:1px solid #ccc;border-radius:4px;width:150px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                <option value="never">Never</option>
+                <option value="always">Always</option>
+                <option value="supported">Only on supported platforms</option>
+            </select>
+        </div>
+
         <div class="setting-item" style="flex-direction: column; align-items: flex-start;">
             <p>Default sidebar width</p>
             <div class="range-container">

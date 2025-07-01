@@ -60,14 +60,26 @@ function hidePerplexityUI() {
   }
 
   if (button) {
-    button.style.display = 'none';
+    hideSideButton();
   }
 }
 
+function shouldShowSideButton(url = location) {
+  const mode = cachedSettings.showSidebarButtonMode || 'supported';
+  if (mode === 'never') return false;
+  if (mode === 'always') return true;
+  return isSupportedPage(url);
+}
+
 function ensureSideButtonVisible() {
+  if (!shouldShowSideButton()) {
+    hideSideButton();
+    return;
+  }
+
   let button = document.getElementById('perplexity-side-button');
   if (button) {
-    button.style.display = 'flex';
+    showSideButton();
   } else {
     addPerplexitySideButton();
   }
@@ -81,19 +93,16 @@ function initializeWithUserSettings() {
 
     cachedSettings = settings;
 
-    if (!isSupportedPage()) return;
-
-    const isYTVideo = isYouTubeVideoPage();
-    if (isYTVideo && !settings.youtubeVideoSummaries) {
-      return;
-    }
+    addCustomFont();
 
     createPerplexitySidebar(settings);
 
-    if (!settings.autoExpandSidebar) {
-      addPerplexitySideButton();
-    } else {
-      addPerplexitySideButton(true);
+    if (settings.showSidebarButtonMode !== 'never' && shouldShowSideButton()) {
+      if (!settings.autoExpandSidebar) {
+        addPerplexitySideButton();
+      } else {
+        addPerplexitySideButton(true);
+      }
     }
 
     setupLocationChangeListener();
@@ -101,12 +110,19 @@ function initializeWithUserSettings() {
 }
 
 function createPerplexitySidebar(settings) {
+  const isYT = window.location.hostname.includes('youtube.com') && window.location.pathname === '/watch';
+  const isGSearch = isGoogleSearchPage();
+  const isDdg = isDuckDuckGoSearchPage();
+  const isBrave = isBraveSearchPage();
+
   let query = '';
 
-  if (window.location.hostname.includes('youtube.com') && window.location.pathname === '/watch') {
+  if (isYT && settings.youtubeVideoSummaries) {
     query = `Summarize this video: ${window.location.href}`;
-  } else {
+  } else if ((isGSearch && settings.googleSearch) || (isDdg && settings.duckduckgoSearch) || (isBrave && settings.braveSearch)) {
     query = new URLSearchParams(window.location.search).get('q') || '';
+  } else {
+    query = '';
   }
 
   const perplexityUrl = `https://www.perplexity.ai/search?q=${encodeURIComponent(query)}`;
@@ -138,7 +154,7 @@ function createPerplexitySidebar(settings) {
       }
 
       const sideButton = document.getElementById("perplexity-side-button");
-      if (sideButton) sideButton.style.display = "none";
+      if (sideButton) hideSideButton();
     }, 30);
   }
 }
@@ -285,7 +301,7 @@ function createCloseButton() {
     const sideButton = document.getElementById("perplexity-side-button");
 
     if (sidebar) sidebar.style.transform = "translateX(100%)";
-    if (sideButton) sideButton.style.display = "flex";
+    if (sideButton) showSideButton();
   });
 
   return closeButton;
@@ -368,7 +384,7 @@ function setupResizeFunctionality(sidebar, resizeHandle, iframe) {
       sidebar.style.transform = "translateX(100%)";
 
       const sideButton = document.getElementById("perplexity-side-button");
-      if (sideButton) sideButton.style.display = "flex";
+      if (sideButton) showSideButton();
     }
 
     if (currentIframe) currentIframe.style.pointerEvents = 'auto';
@@ -402,6 +418,9 @@ function addPerplexitySideButton(initiallyHidden = false) {
 }
 
 function addCustomFont() {
+  if (window.perplexityFontAdded) return;
+  window.perplexityFontAdded = true;
+
   const fontFaceStyle = document.createElement('style');
   fontFaceStyle.textContent = `
     @font-face {
@@ -432,23 +451,26 @@ function createSideButton(initiallyHidden = false) {
   const button = document.createElement('div');
   button.id = "perplexity-side-button";
 
+  button.style.cssText = 'all: unset;';
+
   Object.assign(button.style, {
     position: "fixed",
     top: "50%",
     right: "0",
-    transform: "translateY(-50%)",
+    transform: initiallyHidden ? "translateY(-50%) translateX(100%)" : "translateY(-50%) translateX(0)",
     width: "70px",
     height: "70px",
     borderRadius: "35px 0 0 35px",
     backgroundColor: COLORS.primary,
     color: "#fff",
-    display: initiallyHidden ? "none" : "flex",
+    display: "flex",
+    pointerEvents: initiallyHidden ? "none" : "auto",
     alignItems: "center",
     justifyContent: "center",
     cursor: "pointer",
     zIndex: "9999",
     boxShadow: "0 2px 5px rgba(0,0,0,0.3)",
-    transition: "width 0.3s ease, padding 0.3s ease",
+    transition: "transform 0.3s ease, width 0.3s ease, padding 0.3s ease",
     paddingRight: "10px",
     overflow: "hidden"
   });
@@ -506,7 +528,7 @@ function toggleSidebar() {
 
   if (isVisible) {
     sidebar.style.transform = "translateX(100%)";
-    button.style.display = "flex";
+    if (button) showSideButton();
   } else {
     storageArea.get({
       settings: DEFAULT_SETTINGS
@@ -515,7 +537,7 @@ function toggleSidebar() {
       const width = `${settings.sidebarWidth}px`;
       sidebar.style.width = width;
       sidebar.style.transform = "translateX(0)";
-      button.style.display = "none";
+      if (button) hideSideButton();
 
       if (!sidebar.dataset.loaded) {
         const iframe = createIframe(sidebar.dataset.perplexityUrl);
@@ -550,18 +572,41 @@ function setupLocationChangeListener() {
   window.addEventListener('locationchange', handleLocationChange);
 
   window.addEventListener('yt-navigate-finish', handleLocationChange);
+
+  if (!window.perplexityShortcutListenerInstalled) {
+    window.perplexityShortcutListenerInstalled = true;
+
+    window.addEventListener('keydown', (e) => {
+      const activeTag = document.activeElement && document.activeElement.tagName;
+      const isEditable = (document.activeElement && (document.activeElement.isContentEditable || activeTag === 'INPUT' || activeTag === 'TEXTAREA'));
+      if (isEditable) return;
+
+      const isKeyP = (e.code === 'KeyP') || (e.key && e.key.toLowerCase() === 'p');
+      if (!isKeyP) return;
+
+      const isAltOnly = e.altKey && !e.ctrlKey && !e.shiftKey && !e.metaKey;
+
+      if (isAltOnly) {
+        e.preventDefault();
+        toggleSidebar();
+      }
+    });
+  }
+
+  chrome.runtime.onMessage.addListener((message) => {
+    if (message && message.toggleSidebar) {
+      toggleSidebar();
+    }
+  });
 }
 
 function handleLocationChange() {
-  if (!isSupportedPage()) {
-    hidePerplexityUI();
-    return;
-  }
-
   ensureSideButtonVisible();
   prepareSidebarForSupportedPage();
 
   const sidebar = document.getElementById('perplexity-sidebar');
+
+  const basePerplexityUrl = 'https://www.perplexity.ai/';
 
   const isYouTubeVideo = isYouTubeVideoPage();
 
@@ -622,6 +667,27 @@ function handleLocationChange() {
       sidebar.dataset.loaded = '';
     }
   }
+
+  if (!isYouTubeVideo && !isSearchPageActive && sidebar) {
+    sidebar.dataset.perplexityUrl = basePerplexityUrl;
+
+    const isOpen = sidebar.style.transform === 'translateX(0)' || sidebar.style.transform === 'translateX(0px)';
+    const iframe = sidebar.querySelector('iframe');
+
+    if (isOpen) {
+      if (iframe) {
+        if (iframe.src !== basePerplexityUrl) iframe.src = basePerplexityUrl;
+      } else {
+        const newIframe = createIframe(basePerplexityUrl);
+        const container = sidebar.querySelector('[data-container="true"]');
+        (container || sidebar).appendChild(newIframe);
+      }
+      sidebar.dataset.loaded = 'true';
+    } else {
+      if (iframe) iframe.remove();
+      sidebar.dataset.loaded = '';
+    }
+  }
   prepareSidebarForSupportedPage();
 }
 
@@ -650,4 +716,23 @@ function startURLWatcher() {
       handleLocationChange();
     }
   }, 800);
+}
+
+function showSideButton() {
+  const btn = document.getElementById('perplexity-side-button');
+  if (!btn) return;
+  if (!shouldShowSideButton()) {
+    hideSideButton();
+    return;
+  }
+  btn.style.transform = 'translateY(-50%) translateX(0)';
+  btn.style.pointerEvents = 'auto';
+}
+
+function hideSideButton() {
+  const btn = document.getElementById('perplexity-side-button');
+  if (btn) {
+    btn.style.transform = 'translateY(-50%) translateX(100%)';
+    btn.style.pointerEvents = 'none';
+  }
 }

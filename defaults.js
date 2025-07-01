@@ -4,6 +4,7 @@ const DEFAULT_SETTINGS = {
   youtubeVideoSummaries: true,
   duckduckgoSearch: true,
   braveSearch: true,
+  showSidebarButtonMode: 'supported',
   sidebarWidth: 400
 };
 
