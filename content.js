@@ -133,8 +133,11 @@ function createPerplexitySidebar(settings) {
   const contentContainer = createContentContainer();
   const resizeHandle = createResizeHandle();
 
+  const optionsButton = createOptionsButton();
+
   sidebar.dataset.perplexityUrl = perplexityUrl;
 
+  headerSection.appendChild(optionsButton);
   headerSection.appendChild(closeButton);
   sidebar.appendChild(resizeHandle);
   sidebar.appendChild(headerSection);
@@ -143,7 +146,14 @@ function createPerplexitySidebar(settings) {
 
   setupResizeFunctionality(sidebar, resizeHandle, sidebar.querySelector('iframe'));
 
-  if (settings.autoExpandSidebar) {
+  const shouldAutoExpand = settings.autoExpandSidebar && (
+    (isYT && settings.youtubeVideoSummaries) ||
+    (isGSearch && settings.googleSearch) ||
+    (isDdg && settings.duckduckgoSearch) ||
+    (isBrave && settings.braveSearch)
+  );
+
+  if (shouldAutoExpand) {
     setTimeout(() => {
       sidebar.style.transform = "translateX(0)";
 
@@ -305,6 +315,47 @@ function createCloseButton() {
   });
 
   return closeButton;
+}
+
+function createOptionsButton() {
+  const btn = document.createElement('div');
+  btn.id = 'perplexity-options-button';
+
+  btn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14,12.94a7.43,7.43,0,0,0,.05-.94,7.43,7.43,0,0,0-.05-.94l2.11-1.65a.5.5,0,0,0,.12-.63l-2-3.46a.5.5,0,0,0-.61-.22l-2.49,1a7.28,7.28,0,0,0-1.63-.94l-.38-2.65a.5.5,0,0,0-.5-.42H9.33a.5.5,0,0,0-.5.42l-.38,2.65a7.28,7.28,0,0,0-1.63.94l-2.49-1a.5.5,0,0,0-.61.22l-2,3.46a.5.5,0,0,0,.12.63l2.11,1.65a7.43,7.43,0,0,0-.05.94,7.43,7.43,0,0,0,.05.94L2,14.59a.5.5,0,0,0-.12.63l2,3.46a.5.5,0,0,0,.61.22l2.49-1a7.28,7.28,0,0,0,1.63.94l.38,2.65a.5.5,0,0,0,.5.42h4.34a.5.5,0,0,0,.5-.42l.38-2.65a7.28,7.28,0,0,0,1.63-.94l2.49,1a.5.5,0,0,0,.61-.22l2-3.46a.5.5,0,0,0-.12-.63Zm-7.14,2.06A3,3,0,1,1,15,12,3,3,0,0,1,12,15Z"/></svg>`;
+
+  Object.assign(btn.style, {
+    position: 'absolute',
+    top: '10px',
+    right: '50px',
+    width: '30px',
+    height: '30px',
+    borderRadius: '50%',
+    backgroundColor: COLORS.buttonBg,
+    color: '#333',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+    fontSize: '16px',
+    zIndex: '10000',
+    transition: 'background-color 0.2s ease, color 0.2s ease'
+  });
+
+  btn.addEventListener('mouseover', () => {
+    btn.style.backgroundColor = COLORS.buttonHoverBg;
+    btn.style.color = COLORS.primary;
+  });
+
+  btn.addEventListener('mouseout', () => {
+    btn.style.backgroundColor = COLORS.buttonBg;
+    btn.style.color = '#333';
+  });
+
+  btn.addEventListener('click', () => {
+    toggleOptionsPopup();
+  });
+
+  return btn;
 }
 
 function createContentContainer() {
@@ -470,7 +521,7 @@ function createSideButton(initiallyHidden = false) {
     cursor: "pointer",
     zIndex: "9999",
     boxShadow: "0 2px 5px rgba(0,0,0,0.3)",
-    transition: "transform 0.3s ease, width 0.3s ease, padding 0.3s ease",
+    transition: "transform 0.3s ease, background-color 0.2s ease",
     paddingRight: "10px",
     overflow: "hidden"
   });
@@ -495,23 +546,16 @@ function createButtonText() {
   return buttonText;
 }
 
-function setupButtonInteractions(button, logoImg, buttonText) {
-  button.addEventListener('mouseover', () => {
-    button.style.width = "248px";
-    button.style.justifyContent = "flex-start";
-    button.style.paddingLeft = "15px";
-    logoImg.style.marginRight = "10px";
-    buttonText.style.opacity = "1";
-    buttonText.style.maxWidth = "200px";
+function setupButtonInteractions(button, _logoImg, _buttonText) {
+  const originalBg = button.style.backgroundColor;
+  const hoverBg = "#52b8c6";
+
+  button.addEventListener("mouseover", () => {
+    button.style.backgroundColor = hoverBg;
   });
 
-  button.addEventListener('mouseout', () => {
-    button.style.width = "70px";
-    button.style.justifyContent = "center";
-    button.style.paddingLeft = "0";
-    logoImg.style.marginRight = "0";
-    buttonText.style.opacity = "0";
-    buttonText.style.maxWidth = "0";
+  button.addEventListener("mouseout", () => {
+    button.style.backgroundColor = originalBg;
   });
 
   button.addEventListener("click", toggleSidebar);
@@ -735,4 +779,220 @@ function hideSideButton() {
     btn.style.transform = 'translateY(-50%) translateX(100%)';
     btn.style.pointerEvents = 'none';
   }
+}
+
+function toggleOptionsPopup() {
+  const sidebar = document.getElementById('perplexity-sidebar');
+  if (!sidebar) return;
+
+  let overlay = sidebar.querySelector('#perplexity-options-popup');
+
+  if (overlay) {
+    overlay.remove();
+    return;
+  }
+
+  overlay = document.createElement('div');
+  overlay.id = 'perplexity-options-popup';
+
+  Object.assign(overlay.style, {
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    width: '100%',
+    height: '100%',
+    background: 'rgba(0,0,0,0.25)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: '10001'
+  });
+
+  const modal = document.createElement('div');
+  Object.assign(modal.style, {
+    position: 'relative',
+    width: '340px',
+    maxWidth: '90%',
+    height: 'auto',
+    maxHeight: '90%',
+    background: '#fff',
+    borderRadius: '8px',
+    boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
+    overflow: 'hidden',
+    display: 'flex',
+    flexDirection: 'column'
+  });
+
+  const header = document.createElement('div');
+  Object.assign(header.style, {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    height: '50px',
+    padding: '0 15px',
+    borderBottom: `1px solid ${COLORS.border}`,
+    backgroundColor: COLORS.headerBg,
+    flexShrink: '0'
+  });
+
+  const titleSpan = document.createElement('span');
+  titleSpan.textContent = 'Settings';
+  Object.assign(titleSpan.style, {
+    fontFamily: 'FKGrotesk-Regular, sans-serif',
+    fontSize: '16px',
+    color: '#333'
+  });
+
+  const close = document.createElement('div');
+  close.innerHTML = '✕';
+  Object.assign(close.style, {
+    width: '30px',
+    height: '30px',
+    borderRadius: '50%',
+    backgroundColor: COLORS.buttonBg,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+    fontSize: '16px',
+    color: '#333',
+    transition: 'background-color 0.2s ease, color 0.2s ease'
+  });
+  close.addEventListener('mouseover', () => { close.style.backgroundColor = COLORS.buttonHoverBg; close.style.color = COLORS.primary; });
+  close.addEventListener('mouseout', () => { close.style.backgroundColor = COLORS.buttonBg; close.style.color = '#333'; });
+  close.addEventListener('click', () => overlay.remove());
+
+  header.appendChild(titleSpan);
+  header.appendChild(close);
+  modal.appendChild(header);
+
+  const contentWrap = document.createElement('div');
+  Object.assign(contentWrap.style, {
+    flex: '1',
+    padding: '10px 20px 20px',
+    overflowY: 'auto',
+    fontFamily: 'FKGrotesk-Regular, sans-serif',
+    color: '#333',
+    fontSize: '13px',
+    maxHeight: 'calc(90vh - 50px)'
+  });
+
+  buildOptionsUI(contentWrap);
+
+  modal.appendChild(contentWrap);
+  overlay.appendChild(modal);
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) overlay.remove();
+  });
+
+  sidebar.appendChild(overlay);
+}
+
+function buildOptionsUI(container) {
+  if (!document.getElementById('perplexity-options-style')) {
+    const styleEl = document.createElement('style');
+    styleEl.id = 'perplexity-options-style';
+    styleEl.textContent = `
+      .setting-item{margin:15px 0;display:flex;align-items:center;justify-content:space-between;font-family:'FKGrotesk-Regular',sans-serif} .setting-item p{font-size:14px;margin:0}
+      .switch{position:relative;display:inline-block;width:50px;height:24px}.switch input{opacity:0;width:0;height:0}.toggle{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;transition:.4s;border-radius:24px}.toggle:before{position:absolute;content:"";height:16px;width:16px;left:4px;bottom:4px;background-color:#fff;transition:.4s;border-radius:50%} input:checked+.toggle{background-color:#40a0b0} input:checked+.toggle:before{transform:translateX(26px)}
+      .platform-item{display:inline-flex;align-items:center;gap:6px;margin:6px 0;cursor:pointer;user-select:none;font-family:'FKGrotesk-Regular',sans-serif;font-size:13px;color:#333} .platform-item img{width:18px;height:18px}
+      .platform-item.disabled{color:#999;text-decoration:line-through;text-decoration-color:#999;text-decoration-thickness:2px}
+      .platform-item:not(.disabled):hover{text-decoration:line-through;text-decoration-color:#40a0b0;text-decoration-thickness:2px}
+      .platform-item.disabled:hover{color:#40a0b0;text-decoration:line-through;text-decoration-color:#40a0b0;text-decoration-thickness:2px}
+      .range-container{width:100%;margin-top:5px}.range-slider{-webkit-appearance:none;width:100%;height:6px;border-radius:3px;background:#d3d3d3;outline:none}.range-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:#40a0b0;cursor:pointer}
+      .range-values{display:flex;justify-content:space-between;font-size:12px;color:#666;margin-top:5px}
+      .width-value{font-size:13px;color:#40a0b0;font-weight:bold;text-align:center;margin-top:5px}
+      .restore-button{background-color:#f1f1f1;border:none;color:#333;padding:8px 14px;font-family:'FKGrotesk-Regular',sans-serif;font-size:13px;cursor:pointer;border-radius:4px;transition:all .3s ease}
+      .restore-button:hover{background-color:#e0e0e0;color:#40a0b0}
+      .more-options-toggle{margin:20px 0 10px;font-size:14px;color:#40a0b0;cursor:pointer;user-select:none;display:flex;align-items:center;gap:4px}
+      .footer{display:flex;justify-content:center;margin-top:20px}
+    `;
+    document.head.appendChild(styleEl);
+  }
+
+  const extURL = (p) => getExtensionURL(p);
+
+  container.innerHTML = `
+    <div class="setting-item">
+      <p>Auto-expand sidebar</p>
+      <label class="switch"><input type="checkbox" id="autoExpandSidebar"><span class="toggle"></span></label>
+    </div>
+    <p style="font-size:12px;color:#666;margin:4px 0 14px 0;font-family:'FKGrotesk-Regular',sans-serif;">Keyboard shortcut to toggle sidebar: <span style="color:#333">⌥P (Mac) / Alt+P (Windows)</span></p>
+    <h3 style="margin:20px 0 8px 0;font-size:14px;font-weight:bold;color:#333;font-family:'FKGrotesk-Regular',sans-serif;">Supported platforms <span style="font-size:12px;color:#40a0b0;font-weight:normal;">(click to toggle)</span></h3>
+    <div class="platform-item" data-key="googleSearch"><img src="${extURL('assets/icons/google.svg')}" alt="Google"/><span>Google search</span></div>
+    <div class="platform-item" data-key="youtubeVideoSummaries"><img src="${extURL('assets/icons/youtube.svg')}" alt="YouTube"/><span>YouTube video summaries</span></div>
+    <div class="platform-item" data-key="duckduckgoSearch"><img src="${extURL('assets/icons/duckduckgo.svg')}" alt="DuckDuckGo"/><span>DuckDuckGo search</span></div>
+    <div class="platform-item" data-key="braveSearch"><img src="${extURL('assets/icons/brave.svg')}" alt="Brave"/><span>Brave search</span></div>
+    <div class="more-options-toggle" id="moreOptionsToggle">More options ▸</div>
+    <div id="moreOptionsSection" style="display:none;">
+      <div class="setting-item"><p>Show sidebar button</p><select id="showSidebarButtonMode" style="font-family:'FKGrotesk-Regular',sans-serif;font-size:13px;padding:4px 6px;border:1px solid #ccc;border-radius:4px;width:150px;"><option value="never">Never</option><option value="always">Always</option><option value="supported">Only on supported platforms</option></select></div>
+      <div class="setting-item" style="flex-direction:column;align-items:flex-start;">
+        <p>Default sidebar width</p>
+        <div class="range-container"><input type="range" min="300" max="700" value="400" class="range-slider" id="sidebarWidth"><div class="width-value"><span id="widthValue">400</span>px</div></div>
+      </div>
+      <div class="footer"><button id="restoreDefaults" class="restore-button">Restore Defaults</button></div>
+    </div>
+  `;
+
+  const autoExpandCheckbox = container.querySelector('#autoExpandSidebar');
+  const widthSlider = container.querySelector('#sidebarWidth');
+  const widthValue = container.querySelector('#widthValue');
+  const showSidebarSelect = container.querySelector('#showSidebarButtonMode');
+  const platformItems = container.querySelectorAll('.platform-item');
+  const moreOptionsToggle = container.querySelector('#moreOptionsToggle');
+  const moreOptionsSection = container.querySelector('#moreOptionsSection');
+  const restoreBtn = container.querySelector('#restoreDefaults');
+
+  moreOptionsToggle.addEventListener('click', () => {
+    const hidden = moreOptionsSection.style.display === 'none';
+    moreOptionsSection.style.display = hidden ? 'block' : 'none';
+    moreOptionsToggle.textContent = hidden ? 'More options ▾' : 'More options ▸';
+  });
+
+  widthSlider.addEventListener('input', () => (widthValue.textContent = widthSlider.value));
+
+  autoExpandCheckbox.addEventListener('change', saveSettings);
+  widthSlider.addEventListener('change', saveSettings);
+  showSidebarSelect.addEventListener('change', saveSettings);
+  platformItems.forEach(item => item.addEventListener('click', () => { item.classList.toggle('disabled'); saveSettings(); }));
+
+  restoreBtn.addEventListener('click', () => {
+    Object.assign(currentSettings, DEFAULT_SETTINGS);
+    applySettingsToUI();
+    saveSettings();
+  });
+
+  const storage = chrome.storage.local;
+  let currentSettings = { ...DEFAULT_SETTINGS };
+
+  function applySettingsToUI() {
+    autoExpandCheckbox.checked = currentSettings.autoExpandSidebar;
+    widthSlider.value = currentSettings.sidebarWidth;
+    widthValue.textContent = currentSettings.sidebarWidth;
+    showSidebarSelect.value = currentSettings.showSidebarButtonMode || 'supported';
+    platformItems.forEach(item => {
+      const key = item.dataset.key;
+      const enabled = currentSettings[key];
+      if (!enabled) item.classList.add('disabled'); else item.classList.remove('disabled');
+    });
+  }
+
+  function saveSettings() {
+    currentSettings = {
+      autoExpandSidebar: autoExpandCheckbox.checked,
+      googleSearch: !container.querySelector('[data-key="googleSearch"]').classList.contains('disabled'),
+      youtubeVideoSummaries: !container.querySelector('[data-key="youtubeVideoSummaries"]').classList.contains('disabled'),
+      duckduckgoSearch: !container.querySelector('[data-key="duckduckgoSearch"]').classList.contains('disabled'),
+      braveSearch: !container.querySelector('[data-key="braveSearch"]').classList.contains('disabled'),
+      sidebarWidth: parseInt(widthSlider.value),
+      showSidebarButtonMode: showSidebarSelect.value
+    };
+    storage.set({ settings: currentSettings });
+  }
+
+  storage.get({ settings: DEFAULT_SETTINGS }, (data) => {
+    currentSettings = data && data.settings ? data.settings : DEFAULT_SETTINGS;
+    applySettingsToUI();
+  });
 }

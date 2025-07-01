@@ -31,3 +31,15 @@ chrome.commands?.onCommand.addListener((command) => {
     });
   }
 }); 
+
+chrome.action?.onClicked.addListener((tab) => {
+  if (tab && tab.id !== undefined) {
+    chrome.tabs.sendMessage(
+      tab.id,
+      { toggleSidebar: true },
+      () => {
+        void chrome.runtime.lastError;
+      }
+    );
+  }
+}); 
