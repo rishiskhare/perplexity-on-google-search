@@ -8,6 +8,9 @@
       "matches": [
         "https://*.google.com/search*",
         "https://google.com/search*",
+        "https://*.duckduckgo.com/*",
+        "https://duckduckgo.com/*",
+        "https://search.brave.com/*",
         "https://*.youtube.com/watch*",
         "https://youtube.com/watch*"
       ],

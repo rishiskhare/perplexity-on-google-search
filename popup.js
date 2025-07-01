@@ -4,7 +4,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const widthSlider = document.getElementById('sidebarWidth');
     const widthValue = document.getElementById('widthValue');
     const autoExpandSidebar = document.getElementById('autoExpandSidebar');
-    const youtubeSummaries = document.getElementById('youtubeSummaries');
+    const platformItems = document.querySelectorAll('.platform-item');
+    const moreOptionsToggle = document.getElementById('moreOptionsToggle');
+    const moreOptionsSection = document.getElementById('moreOptionsSection');
 
     const storageArea = chrome.storage.local;
 
@@ -17,7 +19,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }, function(data) {
         const settings = (data && data.settings) ? data.settings : DEFAULT_SETTINGS;
         autoExpandSidebar.checked = settings.autoExpandSidebar;
-        youtubeSummaries.checked = settings.youtubeVideoSummaries;
+        platformItems.forEach(item => {
+            const key = item.dataset.key;
+            const enabled = settings[key];
+            if (!enabled) {
+                item.classList.add('disabled');
+            } else {
+                item.classList.remove('disabled');
+            }
+        });
 
         if (settings.sidebarWidth) {
             widthSlider.value = settings.sidebarWidth;
@@ -32,7 +42,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     autoExpandSidebar.addEventListener('change', saveSettings);
-    youtubeSummaries.addEventListener('change', saveSettings);
+
+    platformItems.forEach(item => {
+        item.addEventListener('click', () => {
+            item.classList.toggle('disabled');
+            saveSettings();
+        });
+    });
 
     widthSlider.addEventListener('input', function() {
         widthValue.textContent = this.value;
@@ -44,19 +60,38 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('restoreDefaults').addEventListener('click', function() {
         autoExpandSidebar.checked = DEFAULT_SETTINGS.autoExpandSidebar;
-        youtubeSummaries.checked = DEFAULT_SETTINGS.youtubeVideoSummaries;
+        platformItems.forEach(item => {
+            const key = item.dataset.key;
+            const enabled = DEFAULT_SETTINGS[key];
+            if (!enabled) {
+                item.classList.add('disabled');
+            } else {
+                item.classList.remove('disabled');
+            }
+        });
         widthSlider.value = DEFAULT_SETTINGS.sidebarWidth;
         widthValue.textContent = DEFAULT_SETTINGS.sidebarWidth;
 
         saveSettings();
     });
 
+    if (moreOptionsToggle && moreOptionsSection) {
+        moreOptionsToggle.addEventListener('click', () => {
+            const isHidden = moreOptionsSection.style.display === 'none';
+            moreOptionsSection.style.display = isHidden ? 'block' : 'none';
+            moreOptionsToggle.textContent = isHidden ? 'More options ▾' : 'More options ▸';
+        });
+    }
+
     function saveSettings() {
         storageArea.set({
             settings: {
                 autoExpandSidebar: autoExpandSidebar.checked,
+                googleSearch: !document.querySelector('[data-key="googleSearch"]').classList.contains('disabled'),
                 sidebarWidth: parseInt(widthSlider.value),
-                youtubeVideoSummaries: youtubeSummaries.checked
+                youtubeVideoSummaries: !document.querySelector('[data-key="youtubeVideoSummaries"]').classList.contains('disabled'),
+                duckduckgoSearch: !document.querySelector('[data-key="duckduckgoSearch"]').classList.contains('disabled'),
+                braveSearch: !document.querySelector('[data-key="braveSearch"]').classList.contains('disabled')
             }
         });
     }

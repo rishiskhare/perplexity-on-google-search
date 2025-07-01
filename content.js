@@ -27,8 +27,24 @@ function isGoogleSearchPage(url = location) {
   );
 }
 
+function isDuckDuckGoSearchPage(url = location) {
+  return (
+    url.hostname.includes('duckduckgo.com') && new URLSearchParams(url.search).has('q')
+  );
+}
+
+function isBraveSearchPage(url = location) {
+  return (
+    url.hostname.includes('search.brave.com') && new URLSearchParams(url.search).has('q')
+  );
+}
+
 function isSupportedPage(url = location) {
-  return isYouTubeVideoPage(url) || isGoogleSearchPage(url);
+  if (isYouTubeVideoPage(url)) return cachedSettings.youtubeVideoSummaries;
+  if (isGoogleSearchPage(url)) return cachedSettings.googleSearch;
+  if (isDuckDuckGoSearchPage(url)) return cachedSettings.duckduckgoSearch;
+  if (isBraveSearchPage(url)) return cachedSettings.braveSearch;
+  return false;
 }
 
 function hidePerplexityUI() {
@@ -578,10 +594,15 @@ function handleLocationChange() {
     return;
   }
 
-  const isGoogleSearch = isGoogleSearchPage();
-  if (isGoogleSearch && sidebar) {
-    const query = new URLSearchParams(window.location.search).get('q') || '';
-    const newUrl = `https://www.perplexity.ai/search?q=${encodeURIComponent(query)}`;
+  const isSearchPageActive = (
+    (isGoogleSearchPage() && cachedSettings.googleSearch) ||
+    (isDuckDuckGoSearchPage() && cachedSettings.duckduckgoSearch) ||
+    (isBraveSearchPage() && cachedSettings.braveSearch)
+  );
+
+  if (isSearchPageActive && sidebar) {
+    const queryParam = new URLSearchParams(window.location.search).get('q') || '';
+    const newUrl = `https://www.perplexity.ai/search?q=${encodeURIComponent(queryParam)}`;
     sidebar.dataset.perplexityUrl = newUrl;
 
     const isOpen = sidebar.style.transform === 'translateX(0)' || sidebar.style.transform === 'translateX(0px)';

@@ -1,7 +1,10 @@
 const DEFAULT_SETTINGS = {
   autoExpandSidebar: false,
-  sidebarWidth: 400,
-  youtubeVideoSummaries: true
+  googleSearch: true,
+  youtubeVideoSummaries: true,
+  duckduckgoSearch: true,
+  braveSearch: true,
+  sidebarWidth: 400
 };
 
 if (typeof module !== 'undefined') {

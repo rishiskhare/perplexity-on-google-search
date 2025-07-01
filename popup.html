@@ -39,6 +39,18 @@
             margin: 0;
         }
 
+        .setting-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+        }
+
+        .setting-label img {
+            width: 18px;
+            height: 18px;
+        }
+
         .switch {
             position: relative;
             display: inline-block;
@@ -150,6 +162,51 @@
             background-color: #e0e0e0;
             color: #40a0b0;
         }
+
+        .more-options-toggle {
+            margin: 20px 0 10px 0;
+            font-size: 14px;
+            color: #40a0b0;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .platform-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin: 6px 0;
+            cursor: pointer;
+            user-select: none;
+            font-family: 'FKGrotesk-Regular', sans-serif;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .platform-item img {
+            width: 18px;
+            height: 18px;
+        }
+
+        .platform-item.disabled {
+            color: #999;
+            text-decoration: line-through;
+            text-decoration-color: #999;
+        }
+
+        .platform-item:not(.disabled):hover {
+            text-decoration: line-through;
+            text-decoration-color: #40a0b0;
+        }
+
+        .platform-item.disabled:hover {
+            color: #40a0b0;
+            text-decoration: line-through;
+            text-decoration-color: #40a0b0;
+        }
     </style>
 </head>
 
@@ -163,24 +220,44 @@
         </label>
     </div>
 
-    <div class="setting-item">
-        <p>YouTube video summaries</p>
-        <label class="switch">
-            <input type="checkbox" id="youtubeSummaries">
-            <span class="toggle"></span>
-        </label>
+    <h3
+        style="margin:20px 0 8px 0;font-size:14px;font-weight:bold;color:#333;font-family:'FKGrotesk-Regular',sans-serif;">
+        Supported platforms <span style="font-size:12px;color:#40a0b0;font-weight:normal;">(click to toggle)</span></h3>
+
+    <div class="platform-item" data-key="googleSearch">
+        <img src="assets/icons/google.svg" alt="Google" />
+        <span>Google search</span>
     </div>
 
-    <div class="setting-item" style="flex-direction: column; align-items: flex-start;">
-        <p>Default sidebar width</p>
-        <div class="range-container">
-            <input type="range" min="300" max="700" value="400" class="range-slider" id="sidebarWidth">
-            <div class="width-value"><span id="widthValue">400</span>px</div>
+    <div class="platform-item" data-key="youtubeVideoSummaries">
+        <img src="assets/icons/youtube.svg" alt="YouTube" />
+        <span>YouTube video summaries</span>
+    </div>
+
+    <div class="platform-item" data-key="duckduckgoSearch">
+        <img src="assets/icons/duckduckgo.svg" alt="DuckDuckGo" />
+        <span>DuckDuckGo search</span>
+    </div>
+
+    <div class="platform-item" data-key="braveSearch">
+        <img src="assets/icons/brave.svg" alt="Brave" />
+        <span>Brave search</span>
+    </div>
+
+    <div class="more-options-toggle" id="moreOptionsToggle">More options ▸</div>
+
+    <div id="moreOptionsSection" style="display: none;">
+        <div class="setting-item" style="flex-direction: column; align-items: flex-start;">
+            <p>Default sidebar width</p>
+            <div class="range-container">
+                <input type="range" min="300" max="700" value="400" class="range-slider" id="sidebarWidth">
+                <div class="width-value"><span id="widthValue">400</span>px</div>
+            </div>
         </div>
-    </div>
 
-    <div class="footer">
-        <button id="restoreDefaults" class="restore-button">Restore Defaults</button>
+        <div class="footer">
+            <button id="restoreDefaults" class="restore-button">Restore Defaults</button>
+        </div>
     </div>
 
     <script src="defaults.js"></script>
