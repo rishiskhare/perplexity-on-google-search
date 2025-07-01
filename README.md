@@ -2,6 +2,8 @@
 
 "Perplexity on Google Search" is a free Chrome and Firefox extension that brings the power of Perplexity AI directly into your Google searches. Now you can get answers from both Google and Perplexity side-by-side with a single query—no more switching between tabs or typing the same question twice!
 
+<b>NEW:</b> YouTube video summaries & support for Brave/DuckDuckGo search
+
 ## Key Features
 - <b>Seamless Integration:</b> Automatically opens a Perplexity thread alongside your Google search results.
 - <b>On-Demand Sidebar:</b> By default, access the Perplexity window via a dedicated button next to your search results.
