@@ -562,6 +562,10 @@ function setupButtonInteractions(button, _logoImg, _buttonText) {
 }
 
 function toggleSidebar() {
+  if (!isSupportedPage()) {
+    hidePerplexityUI();
+    return;
+  }
   const sidebar = document.getElementById("perplexity-sidebar");
   const button = document.getElementById("perplexity-side-button");
 
@@ -736,6 +740,10 @@ function handleLocationChange() {
 }
 
 function prepareSidebarForSupportedPage() {
+  if (!isSupportedPage()) {
+    hidePerplexityUI();
+    return;
+  }
   let sidebar = document.getElementById('perplexity-sidebar');
   if (!sidebar) {
     createPerplexitySidebar(cachedSettings);
@@ -896,7 +904,7 @@ function buildOptionsUI(container) {
     styleEl.textContent = `
       .setting-item{margin:15px 0;display:flex;align-items:center;justify-content:space-between;font-family:'FKGrotesk-Regular',sans-serif} .setting-item p{font-size:14px;margin:0}
       .switch{position:relative;display:inline-block;width:50px;height:24px}.switch input{opacity:0;width:0;height:0}.toggle{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;transition:.4s;border-radius:24px}.toggle:before{position:absolute;content:"";height:16px;width:16px;left:4px;bottom:4px;background-color:#fff;transition:.4s;border-radius:50%} input:checked+.toggle{background-color:#40a0b0} input:checked+.toggle:before{transform:translateX(26px)}
-      .platform-item{display:inline-flex;align-items:center;gap:6px;margin:6px 0;cursor:pointer;user-select:none;font-family:'FKGrotesk-Regular',sans-serif;font-size:13px;color:#333} .platform-item img{width:18px;height:18px}
+      .platform-item{display:flex;align-items:center;gap:6px;margin:8px 0;cursor:pointer;user-select:none;font-family:'FKGrotesk-Regular',sans-serif;font-size:13px;color:#333} .platform-item img{width:18px;height:18px}
       .platform-item.disabled{color:#999;text-decoration:line-through;text-decoration-color:#999;text-decoration-thickness:2px}
       .platform-item:not(.disabled):hover{text-decoration:line-through;text-decoration-color:#40a0b0;text-decoration-thickness:2px}
       .platform-item.disabled:hover{color:#40a0b0;text-decoration:line-through;text-decoration-color:#40a0b0;text-decoration-thickness:2px}
@@ -926,7 +934,7 @@ function buildOptionsUI(container) {
     <div class="platform-item" data-key="braveSearch"><img src="${extURL('assets/icons/brave.svg')}" alt="Brave"/><span>Brave search</span></div>
     <div class="more-options-toggle" id="moreOptionsToggle">More options ▸</div>
     <div id="moreOptionsSection" style="display:none;">
-      <div class="setting-item"><p>Show sidebar button</p><select id="showSidebarButtonMode" style="font-family:'FKGrotesk-Regular',sans-serif;font-size:13px;padding:4px 6px;border:1px solid #ccc;border-radius:4px;width:150px;"><option value="never">Never</option><option value="always">Always</option><option value="supported">Only on supported platforms</option></select></div>
+      <div class="setting-item"><p>Show sidebar button</p><select id="showSidebarButtonMode" style="font-family:'FKGrotesk-Regular',sans-serif;font-size:13px;padding:4px 6px;border:1px solid #ccc;border-radius:4px;width:150px;"><option value="never">Never</option><option value="supported">Only on supported websites</option></select></div>
       <div class="setting-item" style="flex-direction:column;align-items:flex-start;">
         <p>Default sidebar width</p>
         <div class="range-container"><input type="range" min="300" max="700" value="400" class="range-slider" id="sidebarWidth"><div class="width-value"><span id="widthValue">400</span>px</div></div>
