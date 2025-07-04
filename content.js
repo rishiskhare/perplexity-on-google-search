@@ -1,5 +1,5 @@
 const SIDEBAR_CONFIG = {
-  DEFAULT_WIDTH: '400px',
+  DEFAULT_WIDTH: '430px',
   MIN_WIDTH: 50,
   CLOSE_THRESHOLD: 50,
   Z_INDEX: 9998
@@ -937,7 +937,7 @@ function buildOptionsUI(container) {
       <div class="setting-item"><p>Show sidebar button</p><select id="showSidebarButtonMode" style="font-family:'FKGrotesk-Regular',sans-serif;font-size:13px;padding:4px 6px;border:1px solid #ccc;border-radius:4px;width:150px;"><option value="never">Never</option><option value="supported">Only on supported websites</option></select></div>
       <div class="setting-item" style="flex-direction:column;align-items:flex-start;">
         <p>Default sidebar width</p>
-        <div class="range-container"><input type="range" min="300" max="700" value="400" class="range-slider" id="sidebarWidth"><div class="width-value"><span id="widthValue">400</span>px</div></div>
+        <div class="range-container"><input type="range" min="300" max="700" value="430" class="range-slider" id="sidebarWidth"><div class="width-value"><span id="widthValue">430</span>px</div></div>
       </div>
       <div class="footer"><button id="restoreDefaults" class="restore-button">Restore Defaults</button></div>
     </div>

@@ -5,7 +5,7 @@ const DEFAULT_SETTINGS = {
   duckduckgoSearch: true,
   braveSearch: true,
   showSidebarButtonMode: 'supported',
-  sidebarWidth: 400
+  sidebarWidth: 430
 };
 
 if (typeof module !== 'undefined') {
