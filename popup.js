@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const moreOptionsToggle = document.getElementById('moreOptionsToggle');
   const moreOptionsSection = document.getElementById('moreOptionsSection');
   const showSidebarButtonMode = document.getElementById('showSidebarButtonMode');
+  const keyboardShortcutEl = document.getElementById('keyboardShortcut');
 
   const storageArea = chrome.storage?.local;
 
@@ -68,6 +69,11 @@ document.addEventListener('DOMContentLoaded', () => {
       moreOptionsSection.style.display = hidden ? 'block' : 'none';
       moreOptionsToggle.textContent = hidden ? 'More options ▾' : 'More options ▸';
     });
+  }
+
+  if (keyboardShortcutEl) {
+    const isMac = /Mac|iPhone|iPod|iPad/.test(navigator.platform);
+    keyboardShortcutEl.textContent = isMac ? '⌥P' : 'Alt+P';
   }
 
   loadSettings();

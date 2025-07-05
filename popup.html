@@ -85,10 +85,10 @@
     }
 
     .platform-item {
-      display: inline-flex;
+      display: flex;
       align-items: center;
       gap: 6px;
-      margin: 6px 0;
+      margin: 8px 0;
       cursor: pointer;
       user-select: none;
       font-family: 'FKGrotesk-Regular', sans-serif;
@@ -105,17 +105,30 @@
       color: #999;
       text-decoration: line-through;
       text-decoration-color: #999;
+      text-decoration-thickness: 2px;
+    }
+
+    .platform-item.disabled img {
+      filter: grayscale(100%);
+      opacity: 0.6;
     }
 
     .platform-item:not(.disabled):hover {
       text-decoration: line-through;
       text-decoration-color: #40a0b0;
+      text-decoration-thickness: 2px;
     }
 
     .platform-item.disabled:hover {
       color: #40a0b0;
       text-decoration: line-through;
       text-decoration-color: #40a0b0;
+      text-decoration-thickness: 2px;
+    }
+
+    .platform-item.disabled:hover img {
+      filter: grayscale(100%) sepia(100%) hue-rotate(150deg) saturate(600%) brightness(85%);
+      opacity: 0.6;
     }
 
     .more-options-toggle {
@@ -183,6 +196,17 @@
       background-color: #e0e0e0;
       color: #40a0b0;
     }
+
+    .kbd {
+      font-family: 'FKGrotesk-Regular', sans-serif;
+      font-size: 13px;
+      padding: 4px 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: #f5f5f5;
+      color: #333;
+      white-space: nowrap;
+    }
   </style>
 </head>
 
@@ -196,12 +220,14 @@
     </label>
   </div>
 
-  <p style="font-size:12px;color:#666;margin:4px 0 14px 0;font-family:'FKGrotesk-Regular',sans-serif;">Keyboard shortcut
-    to toggle sidebar: <br /><span style="color:#333">Chrome &amp; Firefox – ⌥P (Mac) / Alt+P (Win)</span></p>
+  <div class="setting-item">
+    <p>Keyboard shortcut</p>
+    <div class="kbd" id="keyboardShortcut"></div>
+  </div>
 
   <h3
     style="margin:20px 0 8px 0;font-size:14px;font-weight:bold;color:#333;font-family:'FKGrotesk-Regular',sans-serif;">
-    Supported platforms <span style="font-size:12px;color:#40a0b0;font-weight:normal;">(click to toggle)</span></h3>
+    Supported websites <span style="font-size:12px;color:#40a0b0;font-weight:normal;">(click to toggle)</span></h3>
 
   <div class="platform-item" data-key="googleSearch"><img src="assets/icons/google.svg" alt="Google" /><span>Google
       search</span></div>
@@ -219,8 +245,7 @@
       <p>Show sidebar button</p><select id="showSidebarButtonMode"
         style="font-family:'FKGrotesk-Regular',sans-serif;font-size:13px;padding:4px 6px;border:1px solid #ccc;border-radius:4px;width:150px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
         <option value="never">Never</option>
-        <option value="always">Always</option>
-        <option value="supported">Only on supported platforms</option>
+        <option value="supported">Only on supported websites</option>
       </select>
     </div>
     <div class="setting-item" style="flex-direction:column;align-items:flex-start;">

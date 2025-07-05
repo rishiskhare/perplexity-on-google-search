@@ -906,8 +906,10 @@ function buildOptionsUI(container) {
       .switch{position:relative;display:inline-block;width:50px;height:24px}.switch input{opacity:0;width:0;height:0}.toggle{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;transition:.4s;border-radius:24px}.toggle:before{position:absolute;content:"";height:16px;width:16px;left:4px;bottom:4px;background-color:#fff;transition:.4s;border-radius:50%} input:checked+.toggle{background-color:#40a0b0} input:checked+.toggle:before{transform:translateX(26px)}
       .platform-item{display:flex;align-items:center;gap:6px;margin:8px 0;cursor:pointer;user-select:none;font-family:'FKGrotesk-Regular',sans-serif;font-size:13px;color:#333} .platform-item img{width:18px;height:18px}
       .platform-item.disabled{color:#999;text-decoration:line-through;text-decoration-color:#999;text-decoration-thickness:2px}
+      .platform-item.disabled img{filter:grayscale(100%);opacity:.6}
       .platform-item:not(.disabled):hover{text-decoration:line-through;text-decoration-color:#40a0b0;text-decoration-thickness:2px}
       .platform-item.disabled:hover{color:#40a0b0;text-decoration:line-through;text-decoration-color:#40a0b0;text-decoration-thickness:2px}
+      .platform-item.disabled:hover img{filter:grayscale(100%) sepia(100%) hue-rotate(150deg) saturate(600%) brightness(85%);opacity:.6}
       .range-container{width:100%;margin-top:5px}.range-slider{-webkit-appearance:none;width:100%;height:6px;border-radius:3px;background:#d3d3d3;outline:none}.range-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:#40a0b0;cursor:pointer}
       .range-values{display:flex;justify-content:space-between;font-size:12px;color:#666;margin-top:5px}
       .width-value{font-size:13px;color:#40a0b0;font-weight:bold;text-align:center;margin-top:5px}
@@ -915,6 +917,7 @@ function buildOptionsUI(container) {
       .restore-button:hover{background-color:#e0e0e0;color:#40a0b0}
       .more-options-toggle{margin:20px 0 10px;font-size:14px;color:#40a0b0;cursor:pointer;user-select:none;display:flex;align-items:center;gap:4px}
       .footer{display:flex;justify-content:center;margin-top:20px}
+      .kbd{font-family:'FKGrotesk-Regular',sans-serif;font-size:13px;padding:4px 8px;border:1px solid #ccc;border-radius:4px;background:#f5f5f5;color:#333;white-space:nowrap}
     `;
     document.head.appendChild(styleEl);
   }
@@ -926,8 +929,8 @@ function buildOptionsUI(container) {
       <p>Auto-expand sidebar</p>
       <label class="switch"><input type="checkbox" id="autoExpandSidebar"><span class="toggle"></span></label>
     </div>
-    <p style="font-size:12px;color:#666;margin:4px 0 14px 0;font-family:'FKGrotesk-Regular',sans-serif;">Keyboard shortcut to toggle sidebar: <span style="color:#333">⌥P (Mac) / Alt+P (Windows)</span></p>
-    <h3 style="margin:20px 0 8px 0;font-size:14px;font-weight:bold;color:#333;font-family:'FKGrotesk-Regular',sans-serif;">Supported platforms <span style="font-size:12px;color:#40a0b0;font-weight:normal;">(click to toggle)</span></h3>
+    <div class="setting-item"><p>Keyboard shortcut</p><div class="kbd" id="perpKeyboardShortcut"></div></div>
+    <h3 style="margin:20px 0 8px 0;font-size:14px;font-weight:bold;color:#333;font-family:'FKGrotesk-Regular',sans-serif;">Supported websites <span style="font-size:12px;color:#40a0b0;font-weight:normal;">(click to toggle)</span></h3>
     <div class="platform-item" data-key="googleSearch"><img src="${extURL('assets/icons/google.svg')}" alt="Google"/><span>Google search</span></div>
     <div class="platform-item" data-key="youtubeVideoSummaries"><img src="${extURL('assets/icons/youtube.svg')}" alt="YouTube"/><span>YouTube video summaries</span></div>
     <div class="platform-item" data-key="duckduckgoSearch"><img src="${extURL('assets/icons/duckduckgo.svg')}" alt="DuckDuckGo"/><span>DuckDuckGo search</span></div>
@@ -1003,4 +1006,10 @@ function buildOptionsUI(container) {
     currentSettings = data && data.settings ? data.settings : DEFAULT_SETTINGS;
     applySettingsToUI();
   });
+
+  const shortcutEl = container.querySelector('#perpKeyboardShortcut');
+  if (shortcutEl) {
+    const isMac = /Mac|iPhone|iPod|iPad/.test(navigator.platform);
+    shortcutEl.textContent = isMac ? '⌥P' : 'Alt+P';
+  }
 }
