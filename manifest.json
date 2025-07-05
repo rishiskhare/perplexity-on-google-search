@@ -55,6 +55,11 @@
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self';"
   },
+  "icons": {
+    "16": "assets/icon.webp",
+    "48": "assets/icon.webp",
+    "128": "assets/icon.webp"
+  },
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
