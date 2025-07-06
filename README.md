@@ -5,7 +5,16 @@
 <b>NEW:</b> YouTube video summaries & support for Brave/DuckDuckGo search
 
 ## Installation
-The extension is available on the [Google Chrome Web Store](https://chromewebstore.google.com/detail/perplexity-on-google-sear/mcpphmhblkibpbdalnocnnpmpfjleaha?authuser=0&hl=en) and [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/perplexity-on-google-search/).
+Get the latest version of this extension on the [Google Chrome Web Store](https://chromewebstore.google.com/detail/perplexity-on-google-sear/mcpphmhblkibpbdalnocnnpmpfjleaha?authuser=0&hl=en) and [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/perplexity-on-google-search/).
+
+## Sign-In Disabled ⚠️
+Right now, the extension is <b>100% free-to-use</b> and doesn’t have any <b>rate limits</b>.
+
+Unfortunately, to keep it this way, the Chrome extension <b>won’t allow logging in with Google or Apple</b> because Chrome security counts this as a redirect. I honestly think it’s better this way to keep the Perplexity queries anonymous—so that pplx won’t associate your Google searches and YouTube video history with your account.
+
+However, if you're somehow able to get it working, feel free to make a PR and I'll accept your change into the official code for the next release.
+
+View my announcement on [Reddit](https://www.reddit.com/r/perplexity_ai/comments/1lnyjjk/i_made_a_chrome_extension_that_brings_perplexity/)
 
 ## Key Features
 - <b>Seamless Integration:</b> Automatically opens a Perplexity thread alongside your Google search results.
@@ -21,7 +30,7 @@ The extension is available on the [Google Chrome Web Store](https://chromewebsto
 https://github.com/user-attachments/assets/6db20a44-bac2-4328-8ba1-c7c5eeeae726
 
 ## Local Installation (Chrome)
-1. <b>Download the Extension:</b> Get the latest version from the [Chrome Web Store](https://chromewebstore.google.com/detail/perplexity-on-google-sear/mcpphmhblkibpbdalnocnnpmpfjleaha?hl=en) or clone the repository.
+1. <b>Download the Extension:</b> Clone the repository.
 2. <b>Enable Developer Mode:</b> Open Chrome and navigate to chrome://extensions/. Enable Developer mode.
 3. <b>Load the Extension:</b> Click "Load unpacked" and select the extension folder.
 4. <b>Start Searching:</b> Once installed, perform a Google search and enjoy the integrated Perplexity experience.
@@ -38,12 +47,13 @@ https://github.com/user-attachments/assets/6db20a44-bac2-4328-8ba1-c7c5eeeae726
 If you prefer the Perplexity sidebar to appear automatically rather than waiting for you to click the button, you can adjust the settings:
 - Navigate to the extension options and toggle the "Auto-expand sidebar" option.
 - For a visual guide, refer to the screenshot below.
-<img width="402" alt="Screenshot 2025-03-12 at 4 58 57 PM" src="https://github.com/user-attachments/assets/8d5a75f2-d63a-40cc-b262-7bbefc1d514f" />
+<img width="386" alt="image" src="https://github.com/user-attachments/assets/90943bd5-304d-45d0-a4c8-acd3bdd88bf2" />
+
 
 ## Contributing
 Contributions, bug reports, and feature suggestions are welcome! If you appreciate the work and find it useful, please consider:
-- Starring the Repo: A star helps spread the word.
-- Forking and Submitting PRs: Enhance functionality or fix issues and submit your improvements.
+- <b>Starring the Repo ⭐:</b> A star helps spread the word.
+- <b>Forking and Submitting PRs:</b> Enhance functionality or fix issues and submit your improvements.
 
 ## License
 This project is licensed under [Apache License, 2.0](https://github.com/rishiskhare/perplexity-on-google-search?tab=Apache-2.0-1-ov-file#readme).<br>
