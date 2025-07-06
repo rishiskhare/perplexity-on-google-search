@@ -4,6 +4,9 @@
 
 <b>NEW:</b> YouTube video summaries & support for Brave/DuckDuckGo search
 
+## Installation
+The extension is available on the [Google Chrome Web Store](https://chromewebstore.google.com/detail/perplexity-on-google-sear/mcpphmhblkibpbdalnocnnpmpfjleaha?authuser=0&hl=en) and [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/perplexity-on-google-search/).
+
 ## Key Features
 - <b>Seamless Integration:</b> Automatically opens a Perplexity thread alongside your Google search results.
 - <b>On-Demand Sidebar:</b> By default, access the Perplexity window via a dedicated button next to your search results.
@@ -17,17 +20,19 @@
 
 https://github.com/user-attachments/assets/6db20a44-bac2-4328-8ba1-c7c5eeeae726
 
-## Installation (Chrome)
+## Local Installation (Chrome)
 1. <b>Download the Extension:</b> Get the latest version from the [Chrome Web Store](https://chromewebstore.google.com/detail/perplexity-on-google-sear/mcpphmhblkibpbdalnocnnpmpfjleaha?hl=en) or clone the repository.
 2. <b>Enable Developer Mode:</b> Open Chrome and navigate to chrome://extensions/. Enable Developer mode.
 3. <b>Load the Extension:</b> Click "Load unpacked" and select the extension folder.
 4. <b>Start Searching:</b> Once installed, perform a Google search and enjoy the integrated Perplexity experience.
 
-## Installation (Firefox)
+## Local Installation (Firefox)
 1. <b>Download the Extension:</b> Clone the repository.
-2. <b>Enable Developer Mode:</b> Open Firefox and navigate to about:debugging#/runtime/this-firefox.
-3. <b>Load the Extension:</b> Click "Load Temporary Add-on..." and select the manifest-firefox.json file.
-4. <b>Start Searching:</b> Once installed, perform a Google search and enjoy the integrated Perplexity experience.
+2. <b>Delete manifest.json</b>
+3. <b>Rename manifest-firefox.json to be manifest.json</b>
+3. <b>Enable Developer Mode:</b> Open Firefox and navigate to about:debugging#/runtime/this-firefox.
+4. <b>Load the Extension:</b> Click "Load Temporary Add-on..." and select the manifest.json file.
+5. <b>Start Searching:</b> Once installed, perform a Google search and enjoy the integrated Perplexity experience.
 
 ## Customization
 If you prefer the Perplexity sidebar to appear automatically rather than waiting for you to click the button, you can adjust the settings:
