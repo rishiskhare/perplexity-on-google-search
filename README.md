@@ -1,11 +1,11 @@
-# Perplexity on Google Search (Browser Extension)
+# Perplexity on Google Search (Chrome Extension)
 
-"Perplexity on Google Search" is a free Chrome and Firefox extension that brings the power of Perplexity AI directly into your Google searches. Now you can get answers from both Google and Perplexity side-by-side with a single query—no more switching between tabs or typing the same question twice!
+"Perplexity on Google Search" is a free Chrome extension that brings the power of Perplexity AI directly into your Google searches. Now you can get answers from both Google and Perplexity side-by-side with a single query—no more switching between tabs or typing the same question twice!
 
 <b>NEW:</b> YouTube video summaries & support for Brave/DuckDuckGo search
 
 ## Installation
-Get the latest version of this extension on the [Google Chrome Web Store](https://chromewebstore.google.com/detail/perplexity-on-google-sear/mcpphmhblkibpbdalnocnnpmpfjleaha?authuser=0&hl=en) and [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/perplexity-on-google-search/).
+Get the latest version of this extension on the [Google Chrome Web Store](https://chromewebstore.google.com/detail/perplexity-on-google-sear/mcpphmhblkibpbdalnocnnpmpfjleaha?authuser=0&hl=en).
 
 ## Sign-In Disabled ⚠️
 Right now, the extension is <b>100% free-to-use</b> and doesn’t have any <b>rate limits</b>.
@@ -34,14 +34,6 @@ https://github.com/user-attachments/assets/6db20a44-bac2-4328-8ba1-c7c5eeeae726
 2. <b>Enable Developer Mode:</b> Open Chrome and navigate to chrome://extensions/. Enable Developer mode.
 3. <b>Load the Extension:</b> Click "Load unpacked" and select the extension folder.
 4. <b>Start Searching:</b> Once installed, perform a Google search and enjoy the integrated Perplexity experience.
-
-## Local Installation (Firefox)
-1. <b>Download the Extension:</b> Clone the repository.
-2. <b>Delete manifest.json</b>
-3. <b>Rename manifest-firefox.json to be manifest.json</b>
-3. <b>Enable Developer Mode:</b> Open Firefox and navigate to about:debugging#/runtime/this-firefox.
-4. <b>Load the Extension:</b> Click "Load Temporary Add-on..." and select the manifest.json file.
-5. <b>Start Searching:</b> Once installed, perform a Google search and enjoy the integrated Perplexity experience.
 
 ## Customization
 If you prefer the Perplexity sidebar to appear automatically rather than waiting for you to click the button, you can adjust the settings:
