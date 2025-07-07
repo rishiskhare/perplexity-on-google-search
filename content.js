@@ -489,8 +489,8 @@ function createLogoImage() {
   logoImg.alt = "Perplexity";
 
   Object.assign(logoImg.style, {
-    width: "40px",
-    height: "40px",
+    width: "30px",
+    height: "30px",
     marginRight: "0",
     transition: "margin-right 0.3s ease"
   });
@@ -509,9 +509,9 @@ function createSideButton(initiallyHidden = false) {
     top: "50%",
     right: "0",
     transform: initiallyHidden ? "translateY(-50%) translateX(100%)" : "translateY(-50%) translateX(0)",
-    width: "70px",
-    height: "70px",
-    borderRadius: "35px 0 0 35px",
+    width: "50px",
+    height: "50px",
+    borderRadius: "25px 0 0 25px",
     backgroundColor: COLORS.primary,
     color: "#fff",
     display: "flex",
