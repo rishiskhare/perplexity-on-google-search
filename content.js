@@ -67,6 +67,8 @@ function hidePerplexityUI() {
 function shouldShowSideButton(url = location) {
   const mode = cachedSettings.showSidebarButtonMode || 'supported';
   if (mode === 'never') return false;
+  const isFullscreen = !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
+  if (isFullscreen && isYouTubeVideoPage(url)) return false;
   if (mode === 'always') return true;
   return isSupportedPage(url);
 }
@@ -1060,3 +1062,24 @@ function buildOptionsUI(container) {
     shortcutEl.textContent = isMac ? '⌥P' : 'Alt+P';
   }
 }
+
+function setupFullscreenHideButton() {
+  if (window.perplexityFullscreenListenerInstalled) return;
+  window.perplexityFullscreenListenerInstalled = true;
+
+  function fsHandler() {
+    const btn = document.getElementById('perplexity-side-button');
+    if (!btn) return;
+    const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
+    if (isFs && isYouTubeVideoPage()) {
+      hideSideButton();
+    } else {
+      ensureSideButtonVisible();
+    }
+  }
+
+  document.addEventListener('fullscreenchange', fsHandler);
+  document.addEventListener('webkitfullscreenchange', fsHandler);
+}
+
+setupFullscreenHideButton();
