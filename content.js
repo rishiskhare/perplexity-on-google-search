@@ -526,6 +526,54 @@ function createSideButton(initiallyHidden = false) {
     overflow: "hidden"
   });
 
+  const closeIcon = document.createElement('div');
+  closeIcon.textContent = '✕';
+  Object.assign(closeIcon.style, {
+    position: "absolute",
+    top: "2px",
+    right: "2px",
+    width: "16px",
+    height: "16px",
+    borderRadius: "50%",
+    backgroundColor: "#f1f1f1",
+    color: "#333",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: "12px",
+    cursor: "pointer",
+    lineHeight: "16px",
+    userSelect: "none",
+    opacity: "0",
+    transition: "opacity 0.2s ease",
+    pointerEvents: "none",
+  });
+  closeIcon.onmouseover = null;
+  closeIcon.onmouseout = null;
+  closeIcon.addEventListener('mouseenter', () => {
+    closeIcon.style.backgroundColor = COLORS.buttonHoverBg;
+    closeIcon.style.color = COLORS.primary;
+  });
+  closeIcon.addEventListener('mouseleave', () => {
+    closeIcon.style.backgroundColor = "#f1f1f1";
+    closeIcon.style.color = "#333";
+  });
+  closeIcon.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const btn = document.getElementById('perplexity-side-button');
+    if (btn) btn.remove();
+  });
+  button.appendChild(closeIcon);
+
+  button.addEventListener('mouseover', () => {
+    closeIcon.style.opacity = '1';
+    closeIcon.style.pointerEvents = 'auto';
+  });
+  button.addEventListener('mouseout', () => {
+    closeIcon.style.opacity = '0';
+    closeIcon.style.pointerEvents = 'none';
+  });
+
   return button;
 }
 
