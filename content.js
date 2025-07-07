@@ -522,7 +522,7 @@ function createSideButton(initiallyHidden = false) {
     zIndex: "9999",
     boxShadow: "0 2px 5px rgba(0,0,0,0.3)",
     transition: "transform 0.3s ease, background-color 0.2s ease",
-    paddingRight: "10px",
+    paddingRight: "5px",
     overflow: "hidden"
   });
 
