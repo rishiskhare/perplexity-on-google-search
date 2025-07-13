@@ -19,7 +19,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["assets/perplexity-logo.webp", "assets/FKGrotesk-Regular.ttf", "assets/icons/*.svg", "popup.html", "popup.js"],
+      "resources": ["assets/logo.svg", "assets/FKGrotesk-Regular.ttf", "assets/icons/*.svg", "popup.html", "popup.js"],
       "matches": ["<all_urls>"]
     }
   ],
@@ -56,16 +56,16 @@
     "extension_pages": "script-src 'self'; object-src 'self';"
   },
   "icons": {
-    "16": "assets/icon.webp",
-    "48": "assets/icon.webp",
-    "128": "assets/icon.webp"
+    "16": "assets/icon.png",
+    "48": "assets/icon.png",
+    "128": "assets/icon.png"
   },
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "16": "assets/icon.webp",
-      "48": "assets/icon.webp",
-      "128": "assets/icon.webp"
+      "16": "assets/icon.png",
+      "48": "assets/icon.png",
+      "128": "assets/icon.png"
     }
   }
 }

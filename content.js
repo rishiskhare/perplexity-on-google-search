@@ -487,7 +487,7 @@ function addCustomFont() {
 
 function createLogoImage() {
   const logoImg = document.createElement('img');
-  logoImg.src = getExtensionURL('assets/perplexity-logo.webp');
+  logoImg.src = getExtensionURL('assets/logo.svg');
   logoImg.alt = "Perplexity";
 
   Object.assign(logoImg.style, {
