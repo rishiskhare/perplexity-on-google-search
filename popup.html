@@ -203,6 +203,65 @@
       color: #333;
       white-space: nowrap;
     }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #121212;
+        color: #ddd;
+      }
+
+      h2 {
+        color: #40a0b0;
+      }
+
+      .setting-item p,
+      .platform-item,
+      .more-options-toggle,
+      .kbd {
+        color: #ddd;
+      }
+
+      .platform-item.disabled {
+        color: #777;
+        text-decoration-color: #777;
+      }
+
+      .switch .toggle {
+        background-color: #444;
+      }
+
+      input:checked+.toggle {
+        background-color: #40a0b0;
+      }
+
+      .range-slider {
+        background: #444;
+      }
+
+      .restore-button {
+        background-color: #2a2a2a;
+        color: #ddd;
+      }
+
+      .restore-button:hover {
+        background-color: #3a3a3a;
+        color: #40a0b0;
+      }
+
+      .kbd {
+        background: #2a2a2a !important;
+        border-color: #444 !important;
+        color: #ddd !important;
+      }
+
+      .more-options-toggle {
+        color: #40a0b0 !important;
+      }
+
+      h3 {
+        color: #ddd !important;
+      }
+    }
   </style>
 </head>
 

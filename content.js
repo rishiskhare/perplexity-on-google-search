@@ -13,6 +13,106 @@ const COLORS = {
   border: '#e0e0e0'
 };
 
+(function injectPerplexityDarkModeStyles() {
+  if (window.perplexityDarkModeStylesInjected) return;
+  window.perplexityDarkModeStylesInjected = true;
+
+  const style = document.createElement('style');
+  style.id = 'perplexity-dark-mode-styles';
+  style.textContent = `
+    @media (prefers-color-scheme: dark) {
+      #perplexity-sidebar {
+        background-color: #121212 !important;
+      }
+
+      .perplexity-header-section {
+        background-color: #1f1f1f !important;
+        border-bottom: 1px solid #3a3a3a !important;
+      }
+      .perplexity-header-section a {
+        color: #ddd !important;
+      }
+
+      #perplexity-close-button,
+      #perplexity-options-button {
+        background-color: #2a2a2a !important;
+        color: #ddd !important;
+      }
+      #perplexity-close-button:hover,
+      #perplexity-options-button:hover {
+        background-color: #3a3a3a !important;
+        color: #40a0b0 !important;
+      }
+
+      #perplexity-options-popup .modal {
+        background-color: #1f1f1f !important;
+        color: #ddd !important;
+      }
+      #perplexity-options-popup .setting-item p,
+      #perplexity-options-popup .platform-item,
+      #perplexity-options-popup .more-options-toggle,
+      #perplexity-options-popup h3 {
+        color: #ddd !important;
+      }
+      #perplexity-options-popup .toggle {
+        background-color: #444 !important;
+      }
+      #perplexity-options-popup .restore-button {
+        background-color: #2a2a2a !important;
+        color: #ddd !important;
+      }
+      #perplexity-options-popup .restore-button:hover {
+        background-color: #3a3a3a !important;
+        color: #40a0b0 !important;
+      }
+      #perplexity-options-popup .range-slider {
+        background: #444 !important;
+      }
+      #perplexity-options-popup .range-slider::-webkit-slider-thumb {
+        background: #40a0b0 !important;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+
+  if (!document.getElementById('perplexity-dark-mode-supplemental')) {
+    const sup = document.createElement('style');
+    sup.id = 'perplexity-dark-mode-supplemental';
+    sup.textContent = `
+      @media (prefers-color-scheme: dark) {
+        .perplexity-header-section a:hover {
+          color: #40a0b0 !important;
+        }
+
+        #perplexity-options-popup .perplexity-options-modal {
+          background-color: #1f1f1f !important;
+          color: #ddd !important;
+        }
+
+        #perplexity-options-popup .perplexity-options-header {
+          background-color: #1f1f1f !important;
+          border-bottom: 1px solid #3a3a3a !important;
+        }
+
+        #perplexity-options-popup .perplexity-options-header span {
+          color: #ddd !important;
+        }
+
+        #perplexity-options-popup .kbd {
+          background: #2a2a2a !important;
+          border-color: #444 !important;
+          color: #ddd !important;
+        }
+
+        #perplexity-options-popup .more-options-toggle {
+          color: #40a0b0 !important;
+        }
+      }
+    `;
+    document.head.appendChild(sup);
+  }
+})();
+
 const storageArea = chrome.storage.local;
 let cachedSettings = DEFAULT_SETTINGS;
 const getExtensionURL = (chrome.runtime && chrome.runtime.getURL) ? chrome.runtime.getURL : (p) => p;
@@ -173,6 +273,7 @@ function createPerplexitySidebar(settings) {
 
 function createHeaderSection() {
   const headerSection = document.createElement('div');
+  headerSection.classList.add('perplexity-header-section');
 
   Object.assign(headerSection.style, {
     height: "50px",
@@ -238,7 +339,8 @@ function createHeaderSection() {
   });
 
   combinedLink.addEventListener('mouseout', () => {
-    combinedLink.style.color = "#333";
+    const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    combinedLink.style.color = dark ? '#ddd' : '#333';
   });
 
   combinedLink.appendChild(titleText);
@@ -867,6 +969,7 @@ function toggleOptionsPopup() {
   });
 
   const modal = document.createElement('div');
+  modal.classList.add('perplexity-options-modal');
   Object.assign(modal.style, {
     position: 'relative',
     width: '340px',
@@ -882,6 +985,7 @@ function toggleOptionsPopup() {
   });
 
   const header = document.createElement('div');
+  header.classList.add('perplexity-options-header');
   Object.assign(header.style, {
     display: 'flex',
     alignItems: 'center',
@@ -902,7 +1006,9 @@ function toggleOptionsPopup() {
   });
 
   const close = document.createElement('div');
+  close.id = 'perplexity-options-close';
   close.innerHTML = '✕';
+
   Object.assign(close.style, {
     width: '30px',
     height: '30px',
@@ -916,8 +1022,16 @@ function toggleOptionsPopup() {
     color: '#333',
     transition: 'background-color 0.2s ease, color 0.2s ease'
   });
-  close.addEventListener('mouseover', () => { close.style.backgroundColor = COLORS.buttonHoverBg; close.style.color = COLORS.primary; });
-  close.addEventListener('mouseout', () => { close.style.backgroundColor = COLORS.buttonBg; close.style.color = '#333'; });
+  close.addEventListener('mouseover', () => {
+    const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    close.style.backgroundColor = dark ? '#3a3a3a' : COLORS.buttonHoverBg;
+    close.style.color = COLORS.primary;
+  });
+  close.addEventListener('mouseout', () => {
+    const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    close.style.backgroundColor = dark ? '#2a2a2a' : COLORS.buttonBg;
+    close.style.color = dark ? '#ddd' : '#333';
+  });
   close.addEventListener('click', () => overlay.remove());
 
   header.appendChild(titleSpan);
