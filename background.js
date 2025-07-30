@@ -15,17 +15,9 @@ if (typeof chrome.webRequest !== 'undefined' && chrome.webRequest.onHeadersRecei
     );
   } catch (e) {}
 }
+try { importScripts('defaults.js'); } catch (_e) {}
 
 const storageArea = chrome.storage?.local;
-
-const DEFAULT_SETTINGS = {
-  googleSearch: true,
-  youtubeVideoSummaries: true,
-  duckduckgoSearch: true,
-  braveSearch: true,
-  showSidebarButtonMode: 'supported',
-  sidebarWidth: 430
-};
 
 let cachedSettings = { ...DEFAULT_SETTINGS };
 
@@ -78,29 +70,6 @@ function isSupportedPage(urlString) {
     return false;
   }
 }
-
-function updatePopupForTab(tabId, url) {
-  if (chrome.action && chrome.action.setPopup) {
-    const popupPath = 'popup.html';
-    chrome.action.setPopup({ tabId, popup: popupPath });
-  }
-}
-
-chrome.tabs?.query({}, tabs => {
-  tabs.forEach(t => updatePopupForTab(t.id, t.url || ''));
-});
-
-chrome.tabs?.onUpdated.addListener((tabId, changeInfo, tab) => {
-  if (changeInfo.url) {
-    updatePopupForTab(tabId, changeInfo.url);
-  }
-});
-
-chrome.tabs?.onActivated.addListener(activeInfo => {
-  chrome.tabs.get(activeInfo.tabId, t => {
-    if (t && t.url) updatePopupForTab(activeInfo.tabId, t.url);
-  });
-});
 
 chrome.commands?.onCommand.addListener((command) => {
   if (command === 'toggle-sidebar') {

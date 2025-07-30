@@ -223,7 +223,7 @@ function createPerplexitySidebar(settings) {
     query = '';
   }
 
-  const perplexityUrl = `https://www.perplexity.ai/search?q=${encodeURIComponent(query)}`;
+  const perplexityUrl = query ? `https://www.perplexity.ai/search?q=${encodeURIComponent(query)}` : 'https://www.perplexity.ai/';
 
   const sidebar = createSidebarElement(settings);
   const headerSection = createHeaderSection();
@@ -243,8 +243,6 @@ function createPerplexitySidebar(settings) {
   document.body.appendChild(sidebar);
 
   setupResizeFunctionality(sidebar, resizeHandle, sidebar.querySelector('iframe'));
-
-  // Auto-expand sidebar feature removed.
 }
 
 function createHeaderSection() {
@@ -690,10 +688,6 @@ function setupButtonInteractions(button, _logoImg, _buttonText) {
 }
 
 function toggleSidebar() {
-  if (!isSupportedPage()) {
-    hidePerplexityUI();
-    return;
-  }
   const sidebar = document.getElementById("perplexity-sidebar");
   const button = document.getElementById("perplexity-side-button");
 
@@ -711,6 +705,7 @@ function toggleSidebar() {
     }, function(data) {
       const settings = (data && data.settings) ? data.settings : DEFAULT_SETTINGS;
       const width = `${settings.sidebarWidth}px`;
+      sidebar.style.display = 'flex';
       sidebar.style.width = width;
       sidebar.style.transform = "translateX(0)";
       if (button) hideSideButton();
@@ -1072,7 +1067,7 @@ function buildOptionsUI(container) {
     <div class="platform-item" data-key="braveSearch"><img src="${extURL('assets/icons/brave.svg')}" alt="Brave"/><span>Brave search</span></div>
     <div class="more-options-toggle" id="moreOptionsToggle">More options ▸</div>
     <div id="moreOptionsSection" style="display:none;">
-      <div class="setting-item"><p>Show sidebar button</p><select id="showSidebarButtonMode" style="font-family:'FKGrotesk-Regular',sans-serif;font-size:13px;padding:4px 6px;border:1px solid #ccc;border-radius:4px;width:150px;"><option value="never">Never</option><option value="supported">Only on supported websites</option></select></div>
+      <div class="setting-item"><p>Show sidebar button</p><select id="showSidebarButtonMode" style="font-family:'FKGrotesk-Regular',sans-serif;font-size:13px;padding:4px 6px;border:1px solid #ccc;border-radius:4px;width:150px;"><option value="never">Never</option><option value="supported">Only on supported websites</option><option value="always">Always (all websites)</option></select></div>
       <div class="setting-item" style="flex-direction:column;align-items:flex-start;">
         <p>Default sidebar width</p>
         <div class="range-container"><input type="range" min="300" max="700" value="430" class="range-slider" id="sidebarWidth"><div class="width-value"><span id="widthValue">430</span>px</div></div>
@@ -1081,7 +1076,6 @@ function buildOptionsUI(container) {
     </div>
   `;
 
-  // Auto-expand checkbox removed.
   const widthSlider = container.querySelector('#sidebarWidth');
   const widthValue = container.querySelector('#widthValue');
   const showSidebarSelect = container.querySelector('#showSidebarButtonMode');
@@ -1098,8 +1092,9 @@ function buildOptionsUI(container) {
 
   widthSlider.addEventListener('input', () => (widthValue.textContent = widthSlider.value));
 
-  // Listener removed – feature deprecated.
-  // platformItems.forEach(item => item.addEventListener('click', () => { item.classList.toggle('disabled'); saveSettings(); }));
+  widthSlider.addEventListener('change', saveSettings);
+  showSidebarSelect.addEventListener('change', saveSettings);
+  platformItems.forEach(item => item.addEventListener('click', () => { item.classList.toggle('disabled'); saveSettings(); }));
 
   restoreBtn.addEventListener('click', () => {
     Object.assign(currentSettings, DEFAULT_SETTINGS);
@@ -1111,7 +1106,6 @@ function buildOptionsUI(container) {
   let currentSettings = { ...DEFAULT_SETTINGS };
 
   function applySettingsToUI() {
-    // Auto-expand removed – nothing to sync here.
     widthSlider.value = currentSettings.sidebarWidth;
     widthValue.textContent = currentSettings.sidebarWidth;
     showSidebarSelect.value = currentSettings.showSidebarButtonMode || 'supported';
@@ -1124,7 +1118,6 @@ function buildOptionsUI(container) {
 
   function saveSettings() {
     currentSettings = {
-      // autoExpandSidebar removed from persisted settings
       googleSearch: !container.querySelector('[data-key="googleSearch"]').classList.contains('disabled'),
       youtubeVideoSummaries: !container.querySelector('[data-key="youtubeVideoSummaries"]').classList.contains('disabled'),
       duckduckgoSearch: !container.querySelector('[data-key="duckduckgoSearch"]').classList.contains('disabled'),
