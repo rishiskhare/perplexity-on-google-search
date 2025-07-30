@@ -1,5 +1,4 @@
 const DEFAULT_SETTINGS = {
-  autoExpandSidebar: false,
   googleSearch: true,
   youtubeVideoSummaries: true,
   duckduckgoSearch: true,

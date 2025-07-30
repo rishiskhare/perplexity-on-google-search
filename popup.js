@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const toggles = document.querySelectorAll('.toggle');
   const widthSlider = document.getElementById('sidebarWidth');
   const widthValue = document.getElementById('widthValue');
-  const autoExpandSidebar = document.getElementById('autoExpandSidebar');
   const platformItems = document.querySelectorAll('.platform-item');
   const moreOptionsToggle = document.getElementById('moreOptionsToggle');
   const moreOptionsSection = document.getElementById('moreOptionsSection');
@@ -14,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (toggles.length) toggles.forEach(t => (t.style.transition = 'none'));
 
   const DEFAULT_SETTINGS = {
-    autoExpandSidebar: false,
     googleSearch: true,
     youtubeVideoSummaries: true,
     duckduckgoSearch: true,
@@ -24,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   function applySettingsToUI(settings) {
-    autoExpandSidebar.checked = settings.autoExpandSidebar;
     widthSlider.value = settings.sidebarWidth;
     widthValue.textContent = settings.sidebarWidth;
     showSidebarButtonMode.value = settings.showSidebarButtonMode || 'supported';
@@ -46,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function saveSettings() {
     const newSettings = {
-      autoExpandSidebar: autoExpandSidebar.checked,
       googleSearch: !document.querySelector('[data-key="googleSearch"]').classList.contains('disabled'),
       youtubeVideoSummaries: !document.querySelector('[data-key="youtubeVideoSummaries"]').classList.contains('disabled'),
       duckduckgoSearch: !document.querySelector('[data-key="duckduckgoSearch"]').classList.contains('disabled'),
@@ -57,7 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
     storageArea.set({ settings: newSettings });
   }
 
-  autoExpandSidebar.addEventListener('change', saveSettings);
   widthSlider.addEventListener('input', () => (widthValue.textContent = widthSlider.value));
   widthSlider.addEventListener('change', saveSettings);
   showSidebarButtonMode.addEventListener('change', saveSettings);

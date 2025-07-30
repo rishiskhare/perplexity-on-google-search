@@ -19,7 +19,6 @@ if (typeof chrome.webRequest !== 'undefined' && chrome.webRequest.onHeadersRecei
 const storageArea = chrome.storage?.local;
 
 const DEFAULT_SETTINGS = {
-  autoExpandSidebar: false,
   googleSearch: true,
   youtubeVideoSummaries: true,
   duckduckgoSearch: true,

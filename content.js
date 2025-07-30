@@ -200,11 +200,7 @@ function initializeWithUserSettings() {
     createPerplexitySidebar(settings);
 
     if (settings.showSidebarButtonMode !== 'never' && shouldShowSideButton()) {
-      if (!settings.autoExpandSidebar) {
-        addPerplexitySideButton();
-      } else {
-        addPerplexitySideButton(true);
-      }
+      addPerplexitySideButton();
     }
 
     setupLocationChangeListener();
@@ -248,27 +244,7 @@ function createPerplexitySidebar(settings) {
 
   setupResizeFunctionality(sidebar, resizeHandle, sidebar.querySelector('iframe'));
 
-  const shouldAutoExpand = settings.autoExpandSidebar && (
-    (isYT && settings.youtubeVideoSummaries) ||
-    (isGSearch && settings.googleSearch) ||
-    (isDdg && settings.duckduckgoSearch) ||
-    (isBrave && settings.braveSearch)
-  );
-
-  if (shouldAutoExpand) {
-    setTimeout(() => {
-      sidebar.style.transform = "translateX(0)";
-
-      if (!sidebar.dataset.loaded) {
-        const iframe = createIframe(sidebar.dataset.perplexityUrl);
-        contentContainer.appendChild(iframe);
-        sidebar.dataset.loaded = "true";
-      }
-
-      const sideButton = document.getElementById("perplexity-side-button");
-      if (sideButton) hideSideButton();
-    }, 30);
-  }
+  // Auto-expand sidebar feature removed.
 }
 
 function createHeaderSection() {
@@ -1088,10 +1064,6 @@ function buildOptionsUI(container) {
   const extURL = (p) => getExtensionURL(p);
 
   container.innerHTML = `
-    <div class="setting-item">
-      <p>Auto-expand sidebar</p>
-      <label class="switch"><input type="checkbox" id="autoExpandSidebar"><span class="toggle"></span></label>
-    </div>
     <div class="setting-item"><p>Keyboard shortcut</p><div class="kbd" id="perpKeyboardShortcut"></div></div>
     <h3 style="margin:20px 0 8px 0;font-size:14px;font-weight:bold;color:#333;font-family:'FKGrotesk-Regular',sans-serif;">Supported websites <span style="font-size:12px;color:#40a0b0;font-weight:normal;">(click to toggle)</span></h3>
     <div class="platform-item" data-key="googleSearch"><img src="${extURL('assets/icons/google.svg')}" alt="Google"/><span>Google search</span></div>
@@ -1109,7 +1081,7 @@ function buildOptionsUI(container) {
     </div>
   `;
 
-  const autoExpandCheckbox = container.querySelector('#autoExpandSidebar');
+  // Auto-expand checkbox removed.
   const widthSlider = container.querySelector('#sidebarWidth');
   const widthValue = container.querySelector('#widthValue');
   const showSidebarSelect = container.querySelector('#showSidebarButtonMode');
@@ -1126,10 +1098,8 @@ function buildOptionsUI(container) {
 
   widthSlider.addEventListener('input', () => (widthValue.textContent = widthSlider.value));
 
-  autoExpandCheckbox.addEventListener('change', saveSettings);
-  widthSlider.addEventListener('change', saveSettings);
-  showSidebarSelect.addEventListener('change', saveSettings);
-  platformItems.forEach(item => item.addEventListener('click', () => { item.classList.toggle('disabled'); saveSettings(); }));
+  // Listener removed – feature deprecated.
+  // platformItems.forEach(item => item.addEventListener('click', () => { item.classList.toggle('disabled'); saveSettings(); }));
 
   restoreBtn.addEventListener('click', () => {
     Object.assign(currentSettings, DEFAULT_SETTINGS);
@@ -1141,7 +1111,7 @@ function buildOptionsUI(container) {
   let currentSettings = { ...DEFAULT_SETTINGS };
 
   function applySettingsToUI() {
-    autoExpandCheckbox.checked = currentSettings.autoExpandSidebar;
+    // Auto-expand removed – nothing to sync here.
     widthSlider.value = currentSettings.sidebarWidth;
     widthValue.textContent = currentSettings.sidebarWidth;
     showSidebarSelect.value = currentSettings.showSidebarButtonMode || 'supported';
@@ -1154,7 +1124,7 @@ function buildOptionsUI(container) {
 
   function saveSettings() {
     currentSettings = {
-      autoExpandSidebar: autoExpandCheckbox.checked,
+      // autoExpandSidebar removed from persisted settings
       googleSearch: !container.querySelector('[data-key="googleSearch"]').classList.contains('disabled'),
       youtubeVideoSummaries: !container.querySelector('[data-key="youtubeVideoSummaries"]').classList.contains('disabled'),
       duckduckgoSearch: !container.querySelector('[data-key="duckduckgoSearch"]').classList.contains('disabled'),
