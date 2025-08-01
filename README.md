@@ -4,6 +4,14 @@
 
 <b>NEW:</b> YouTube video summaries & support for Brave/DuckDuckGo search
 
+## (Aug 1) Update:
+Unfortunately, this extension now continuously gives `www.perplexity.ai refused to connect.`. I believe that because I tagged Perplexity in my LinkedIn and X announcements, someone working there has patched this. Because of this, similar extensions have also stopped being able to load `perplexity.ai` on the webpage or in a side panel. Therefore, I have unpublished this Chrome extension and will move on to other projects for the time being. I plan to soon archive this repo as well.
+
+If you can get this to work with Perplexity's new update, please submit a PR! If not, it has been a pleasure to build and share this!
+
+This extension has recieved overwhelming love from the r/perplexity subreddit. View my announcement [here](https://www.reddit.com/r/perplexity_ai/comments/1lnyjjk/i_made_a_chrome_extension_that_brings_perplexity/). Within the first week since I posted, it has reached **1.4k downloads** 🚀 and has even been **featured by the Chrome Web Store**. Although this is the end of this extension, this has spurred more ambitious projects to build - to get involved, reach me anytime at rishiskhare@gmail.com.
+
+
 ## Installation
 Get the latest version of this extension on the [Google Chrome Web Store](https://chromewebstore.google.com/detail/perplexity-on-google-sear/mcpphmhblkibpbdalnocnnpmpfjleaha?authuser=0&hl=en).
 
