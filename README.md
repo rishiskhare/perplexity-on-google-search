@@ -10,8 +10,9 @@ Unfortunately, this extension now continuously gives `www.perplexity.ai refused 
 If you can get this to work with Perplexity's new update, please submit a PR! If not, it has truly been a pleasure to build and share this!
 
 This extension has recieved overwhelming love from the r/perplexity subreddit. View my announcement [here](https://www.reddit.com/r/perplexity_ai/comments/1lnyjjk/i_made_a_chrome_extension_that_brings_perplexity/). Within the first week since I posted, it has reached **1.4k downloads** 🚀. Recently, it has even been **featured by the Chrome Web Store** 🌟. 
+<img width="1510" height="854" alt="Screenshot 2025-08-01 at 4 27 11 PM" src="https://github.com/user-attachments/assets/320224f2-f252-4652-988c-fa0b20b29bc6" />
 
-Although this is the end of this extension, this has spurred more ambitious projects to build - to get involved, reach me anytime at rishiskhare@gmail.com.
+Although this is the end of this extension (for now), this has spurred more ambitious projects to build - to get involved, reach me anytime at rishiskhare@gmail.com.
 
 
 ## Installation
