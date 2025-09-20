@@ -4,6 +4,19 @@
 
 <b>NEW:</b> YouTube video summaries & support for Brave/DuckDuckGo search
 
+https://github.com/user-attachments/assets/6db20a44-bac2-4328-8ba1-c7c5eeeae726
+
+## Key Features
+- <b>Seamless Integration:</b> Automatically opens a Perplexity thread alongside your Google search results.
+- <b>On-Demand Sidebar:</b> By default, access the Perplexity window via a dedicated button next to your search results.
+- <b>Customizable Behavior:</b> Easily configure the extension to have the sidebar pop up automatically if you prefer.
+- <b>Free to Use:</b> Enjoy full functionality at no cost. If you like the extension, give the repo a <b>star</b>! ⭐
+
+## How It Works
+- <b>Search as Usual:</b> Enter your query in Google’s search bar.
+- <b>Instant Answers:</b> A Perplexity thread automatically appears on the right side of your search results, providing a direct answer.
+- <b>Enhanced Browsing:</b> View both Google’s results and Perplexity’s insights together, making your search experience faster and more efficient.
+
 ## (Aug 1) Update:
 Unfortunately, this extension now continuously gives `www.perplexity.ai refused to connect.`. I believe that because I tagged Perplexity in my LinkedIn and X announcements, someone working there has patched this. Because of this, similar extensions have also stopped being able to embed `perplexity.ai` on the webpage or in a side panel. Therefore, I have unpublished this Chrome extension and will move on to other projects for the time being. I plan to soon archive this repo as well.
 
@@ -26,19 +39,6 @@ Unfortunately, to keep it this way, the Chrome extension <b>won’t allow loggin
 However, if you're somehow able to get it working, feel free to make a PR and I'll accept your change into the official code for the next release.
 
 View my announcement on [Reddit](https://www.reddit.com/r/perplexity_ai/comments/1lnyjjk/i_made_a_chrome_extension_that_brings_perplexity/)
-
-## Key Features
-- <b>Seamless Integration:</b> Automatically opens a Perplexity thread alongside your Google search results.
-- <b>On-Demand Sidebar:</b> By default, access the Perplexity window via a dedicated button next to your search results.
-- <b>Customizable Behavior:</b> Easily configure the extension to have the sidebar pop up automatically if you prefer.
-- <b>Free to Use:</b> Enjoy full functionality at no cost. If you like the extension, give the repo a <b>star</b>! ⭐
-
-## How It Works
-- <b>Search as Usual:</b> Enter your query in Google’s search bar.
-- <b>Instant Answers:</b> A Perplexity thread automatically appears on the right side of your search results, providing a direct answer.
-- <b>Enhanced Browsing:</b> View both Google’s results and Perplexity’s insights together, making your search experience faster and more efficient.
-
-https://github.com/user-attachments/assets/6db20a44-bac2-4328-8ba1-c7c5eeeae726
 
 ## Local Installation (Chrome)
 1. <b>Download the Extension:</b> Clone the repository.
